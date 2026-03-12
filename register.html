@@ -182,58 +182,141 @@
             color: var(--primary);
         }
 
-        /* Floating Dock Mobile */
-        .mobile-dock {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            width: 90%;
-            max-width: 450px;
-            background: rgba(10, 20, 40, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 100px;
-            padding: 0.8rem 1.5rem;
+        .grid-menu-btn {
             display: none;
-            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-fast);
             align-items: center;
-            z-index: 1000;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            justify-content: center;
         }
 
-        .mobile-dock.active {
-            display: flex;
-            transform: translateX(-50%) translateY(0);
+        header.scrolled .grid-menu-btn {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
-        .dock-item {
+        .grid-dots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 18px;
+        }
+
+        .grid-dots span {
+            width: 4px;
+            height: 4px;
+            background: var(--white);
+            border-radius: 1px;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .grid-dots span {
+            background: var(--primary);
+        }
+
+        .grid-menu-btn:hover .grid-dots span {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Sidebar Styles */
+        .side-navigation {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--bg-dark);
+            z-index: 2000;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
+            transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-navigation.active {
+            right: 0;
+        }
+
+        .side-nav-header {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.4rem;
-            color: rgba(255, 255, 255, 0.5);
-            transition: var(--transition-fast);
-            flex: 1;
+            margin-bottom: 4rem;
         }
 
-        .dock-item svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .dock-item span {
-            font-size: 0.65rem;
+        .side-logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            color: var(--white);
         }
 
-        .dock-item:hover,
-        .dock-item.active {
+        .side-logo span {
             color: var(--accent);
+        }
+
+        .close-side-nav {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .close-side-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .side-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .side-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition-fast);
+        }
+
+        .side-link:hover,
+        .side-link.active {
+            color: var(--accent);
+            padding-left: 10px;
+        }
+
+        .side-nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Buttons */
@@ -521,6 +604,10 @@
             .nav-links {
                 display: none;
             }
+
+            .grid-menu-btn {
+                display: flex;
+            }
         }
 
         @media (max-width: 768px) {
@@ -706,17 +793,42 @@
                 <a href="index.html#timeline">Dates</a>
                 <a href="#" class="active">Fees</a>
             </div>
+
+            <button class="grid-menu-btn" id="sidebarToggle" aria-label="Toggle Menu">
+                <div class="grid-dots">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
         </nav>
     </header>
 
-    <!-- Mobile Navigation Dock -->
-    <div class="mobile-dock" id="mobileDock">
-        <a href="index.html" class="dock-item"><i data-lucide="home"></i><span>Home</span></a>
-        <a href="index.html#about" class="dock-item"><i data-lucide="info"></i><span>About</span></a>
-        <a href="index.html#tracks" class="dock-item"><i data-lucide="layers"></i><span>Tracks</span></a>
-        <a href="index.html#timeline" class="dock-item"><i data-lucide="calendar"></i><span>Dates</span></a>
-        <a href="#" class="dock-item active"><i data-lucide="wallet"></i><span>Fees</span></a>
-    </div>
+    <!-- Slide-in Sidebar -->
+    <aside class="side-navigation" id="sideNav">
+        <div class="side-nav-header">
+            <a href="index.html#home" class="side-logo">
+                IC ADIB<span>-26</span>
+            </a>
+            <button class="close-side-nav" id="closeSideNav">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <nav class="side-nav-links">
+            <a href="index.html#home" class="side-link">Home</a>
+            <a href="index.html#about" class="side-link">About</a>
+            <a href="index.html#tracks" class="side-link">Tracks</a>
+            <a href="index.html#timeline" class="side-link">Dates</a>
+            <a href="#" class="side-link active">Fees</a>
+            <a href="index.html#committee" class="side-link">Committee</a>
+        </nav>
+
+        <div class="side-nav-footer">
+            <button class="btn btn-accent" style="width: 100%;">Register Now</button>
+        </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <main>
         <!-- Page Hero -->
@@ -934,20 +1046,33 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const header = document.getElementById('header');
-            const mobileDock = document.getElementById('mobileDock');
+            
+            // Sidebar Logic
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const closeSideNav = document.getElementById('closeSideNav');
+            const sideNav = document.getElementById('sideNav');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sideLinks = document.querySelectorAll('.side-link');
+
+            const toggleSidebar = (state) => {
+                sideNav.classList.toggle('active', state);
+                sidebarOverlay.classList.toggle('active', state);
+                document.body.style.overflow = state ? 'hidden' : '';
+            };
+
+            sidebarToggle.addEventListener('click', () => toggleSidebar(true));
+            closeSideNav.addEventListener('click', () => toggleSidebar(false));
+            sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
+
+            sideLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleSidebar(false);
+                });
+            });
 
             window.addEventListener('scroll', () => {
                 const scrolled = window.scrollY > 50;
                 header.classList.toggle('scrolled', scrolled);
-                
-                // Show dock after scrolling a bit on mobile
-                if (window.innerWidth <= 1024) {
-                    if (window.scrollY > 300) {
-                        mobileDock.classList.add('active');
-                    } else {
-                        mobileDock.classList.remove('active');
-                    }
-                }
             });
 
             // Reveal Animation

@@ -2391,6 +2391,29 @@
 
 
 
+            // Sidebar Logic
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const closeSideNav = document.getElementById('closeSideNav');
+            const sideNav = document.getElementById('sideNav');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sideLinks = document.querySelectorAll('.side-link');
+
+            const toggleSidebar = (state) => {
+                sideNav.classList.toggle('active', state);
+                sidebarOverlay.classList.toggle('active', state);
+                document.body.style.overflow = state ? 'hidden' : '';
+            };
+
+            sidebarToggle.addEventListener('click', () => toggleSidebar(true));
+            closeSideNav.addEventListener('click', () => toggleSidebar(false));
+            sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
+
+            sideLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleSidebar(false);
+                });
+            });
+
             // Committee Tabs
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tiers = document.querySelectorAll('.committee-tier');

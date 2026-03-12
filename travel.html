@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel & Stay | IC ADIB-26</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #070B14;
+            --bg-dark-secondary: #0A111E;
+            --primary: #102136;
+            --accent: #FF5A1F;
+            --accent-glow: rgba(255, 90, 31, 0.4);
+            --light-bg: #F8FAFC;
+            --white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-dark: rgba(0, 0, 0, 0.08);
+
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+
+            --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+            width: 100%;
+            font-size: clamp(0.875rem, 2vw, 1.1rem);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--text-dark);
+            line-height: 1.1;
+            font-weight: 500;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        .section {
+            padding: clamp(4rem, 8vw, 8rem) 0;
+            position: relative;
+        }
+
+        /* Floating Glass Header */
+        header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 100;
+            transition: var(--transition-slow);
+        }
+
+        .navbar {
+            background: rgba(7, 11, 20, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header.scrolled .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .logo { color: var(--primary); }
+        .logo span.accent { color: var(--accent); }
+
+        .logo-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        header.scrolled .logo-divider { background: rgba(0, 0, 0, 0.1); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        header.scrolled .nav-links a { color: var(--text-muted); }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--white); }
+
+        header.scrolled .nav-links a:hover,
+        header.scrolled .nav-links a.active { color: var(--primary); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a.active::after,
+        .nav-links a:hover::after { opacity: 1; }
+
+        .grid-menu-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            align-items: center;
+            justify-content: center;
+        }
+
+        header.scrolled .grid-menu-btn {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .grid-dots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 18px;
+        }
+
+        .grid-dots span {
+            width: 4px;
+            height: 4px;
+            background: var(--white);
+            border-radius: 1px;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .grid-dots span { background: var(--primary); }
+
+        /* Sidebar Styles */
+        .side-navigation {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--bg-dark);
+            z-index: 2000;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-navigation.active { right: 0; }
+
+        .side-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .side-logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .side-logo span { color: var(--accent); }
+
+        .close-side-nav {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .close-side-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .side-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .side-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .side-link i { width: 20px; height: 20px; }
+
+        .side-link:hover,
+        .side-link.active {
+            color: var(--accent);
+            padding-left: 10px;
+        }
+
+        .side-nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Hero Selection */
+        .travel-hero {
+            background-color: var(--bg-dark);
+            padding: 10rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+
+        .glow-1 {
+            width: 700px;
+            height: 700px;
+            background: #1a3a5c;
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: rgba(232, 98, 42, 0.6);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-70px) scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .travel-hero h1 {
+            color: var(--white);
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 4px;
+            margin-bottom: 3.5rem;
+            text-transform: uppercase;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        .meta-item svg { color: var(--accent); }
+
+        /* Grid System */
+        .travel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        /* Travel Card */
+        .travel-card {
+            background: var(--white);
+            border-radius: 16px;
+            border: 1px solid var(--border-dark);
+            overflow: hidden;
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .travel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent);
+        }
+
+        .travel-card-img {
+            height: 180px;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2a3a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .travel-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .travel-card:hover .travel-card-img img {
+            transform: scale(1.05);
+        }
+
+        .img-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.2);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .img-placeholder svg { width: 32px; height: 32px; }
+        .img-placeholder span { font-size: 0.75rem; font-family: var(--font-mono); }
+
+        .distance-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(6px);
+            border-radius: 100px;
+            padding: 0.25rem 0.75rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--white);
+            z-index: 2;
+        }
+
+        .card-body { padding: 1.25rem 1.5rem; }
+
+        .card-body h3 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .type-badge {
+            display: inline-block;
+            background: var(--light-bg);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        /* Dark Section Styles */
+        .dark-section {
+            background: var(--bg-dark);
+            color: var(--white);
+        }
+
+        .dark-section .section-title { color: var(--white); }
+        .dark-section .section-desc { color: rgba(255, 255, 255, 0.6); }
+        .dark-section .section-label { color: var(--white); }
+
+        .dark-section .travel-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .dark-section .travel-card:hover {
+            border-color: var(--accent);
+            background: rgba(255, 90, 31, 0.05);
+        }
+
+        .dark-section .travel-card h3 { color: var(--white); }
+        .dark-section .type-badge { background: rgba(255, 90, 31, 0.1); }
+
+        /* Transport Cards */
+        .transport-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .transport-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-dark);
+            transition: var(--transition-fast);
+        }
+
+        .transport-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+        }
+
+        .transport-icon {
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            margin-bottom: 1.5rem;
+        }
+
+        .transport-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .transport-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .map-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-dark);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            margin: 8rem 0;
+            background: linear-gradient(135deg, var(--bg-dark), #101c30);
+            border-radius: 24px;
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 90, 31, 0.15) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            letter-spacing: -1px;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 100px;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-accent { background-color: var(--accent); color: var(--white); }
+        .btn-accent:hover { transform: translateY(-3px); box-shadow: 0 15px 30px var(--accent-glow); }
+        .btn-outline { background-color: transparent; color: var(--white); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .btn-outline:hover { background-color: var(--white); color: var(--text-dark); transform: translateY(-3px); }
+
+        /* Footer */
+        .footer-section {
+            background: var(--bg-dark);
+            color: var(--white);
+            padding: 8rem 0 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span { color: var(--accent); }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .contact-item svg { color: var(--accent); width: 24px; height: 24px; }
+
+        .footer-column h5 {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-column ul {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-column a:hover { color: var(--accent); padding-left: 5px; }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .navbar { padding: 0.6rem 1.5rem; }
+            .nav-links { display: none; }
+            .grid-menu-btn { display: flex; }
+            .travel-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+        }
+
+        @media (max-width: 768px) {
+            .travel-grid { grid-template-columns: repeat(2, 1fr); }
+            .transport-grid { grid-template-columns: 1fr; }
+            .map-wrapper iframe { height: 300px; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .travel-grid { grid-template-columns: 1fr; }
+            .hero-meta { flex-direction: column; align-items: center; gap: 1rem; }
+            .hero-meta div { width: 100%; justify-content: center; }
+            .map-wrapper iframe { height: 220px; }
+            .footer-bottom { flex-direction: column; gap: 2rem; text-align: center; }
+            .travel-hero { padding: 8rem 0 4rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html" class="logo">
+                    <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
+                    <div>IC ADIB<span class="accent">-26</span></div>
+                </a>
+                <div class="logo-divider"></div>
+                <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
+                    style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#tracks">Tracks</a>
+                <a href="index.html#timeline">Dates</a>
+                <a href="travel.html" class="active">Travel</a>
+                <a href="register.html">Fees</a>
+            </div>
+
+            <button class="grid-menu-btn" id="sidebarToggle" aria-label="Toggle Menu">
+                <div class="grid-dots">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="side-navigation" id="sideNav">
+        <div class="side-nav-header">
+            <a href="index.html" class="side-logo">IC ADIB<span>-26</span></a>
+            <button class="close-side-nav" id="closeSideNav"><i data-lucide="x"></i></button>
+        </div>
+        <nav class="side-nav-links">
+            <a href="index.html" class="side-link"><i data-lucide="home"></i>Home</a>
+            <a href="index.html#about" class="side-link"><i data-lucide="info"></i>About</a>
+            <a href="index.html#tracks" class="side-link"><i data-lucide="layers"></i>Tracks</a>
+            <a href="index.html#timeline" class="side-link"><i data-lucide="calendar"></i>Dates</a>
+            <a href="travel.html" class="side-link active"><i data-lucide="map-pin"></i>Travel</a>
+            <a href="register.html" class="side-link"><i data-lucide="credit-card"></i>Fees</a>
+        </nav>
+        <div class="side-nav-footer">
+            <a href="register.html" class="btn btn-accent" style="width: 100%;">Register Now</a>
+        </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="travel-hero">
+            <div class="glow-orb glow-1"></div>
+            <div class="glow-orb glow-2"></div>
+            <div class="container hero-content">
+                <span class="section-label reveal">Delegate Guide</span>
+                <h1 class="reveal" style="transition-delay: 100ms;">Travel & Accommodation</h1>
+                <p class="hero-subtitle reveal" style="transition-delay: 200ms;">IIT(ISM) DHANBAD · JHARKHAND, INDIA</p>
+                <div class="hero-meta reveal" style="transition-delay: 300ms;">
+                    <div class="meta-item"><i data-lucide="map-pin"></i> Dhanbad, Jharkhand 826004</div>
+                    <div class="meta-item"><i data-lucide="train"></i> Dhanbad Junction — 3 km</div>
+                    <div class="meta-item"><i data-lucide="plane"></i> Nearest Airport — Ranchi (180 km)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hotels Section -->
+        <section id="stay" class="section" style="background: var(--light-bg);">
+            <div class="container">
+                <span class="section-label reveal">Stay</span>
+                <h2 class="section-title reveal">Hotels Near IIT(ISM) Dhanbad</h2>
+                <p class="section-desc reveal">The following hotels are located near the IIT(ISM) campus and are recommended for conference delegates.</p>
+
+                <div class="travel-grid reveal">
+                    <!-- Hotel 1 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Kings Resort</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Kings Resort</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 2 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>The Mystique Garden (TMG)</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>The Mystique Garden (TMG)</h3>
+                            <span class="type-badge">Resort</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 3 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Clarks Inn Suites</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Clarks Inn Suites</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 4 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Wedlock Greens Hotels & Resorts</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Wedlock Greens Hotels & Resorts</h3>
+                            <span class="type-badge">Resort</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 5 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Hotel S G International</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Hotel S G International</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 6 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Seventeen Degrees Hotel</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Seventeen Degrees Hotel</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 7 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>The Wedding Bells</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>The Wedding Bells</h3>
+                            <span class="type-badge">Banquet & Stay</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 8 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Hiway-Inn</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Hiway-Inn</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 9 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Cocoon Hotel</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Cocoon Hotel</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 10 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Gulmohar Marriage Garden</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Gulmohar Marriage Garden</h3>
+                            <span class="type-badge">Resort</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 11 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Sonotel Hotels & Resorts</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Sonotel Hotels & Resorts</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 12 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>The Nirvana Resort</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>The Nirvana Resort</h3>
+                            <span class="type-badge">Resort</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 13 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>SB International Hotel & Banquet</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>SB International Hotel & Banquet</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                    <!-- Hotel 14 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="building"></i>
+                                <span>Luxus Inn</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Luxus Inn</h3>
+                            <span class="type-badge">Hotel</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Section -->
+        <section id="campus" class="section dark-section">
+            <div class="container">
+                <span class="section-label reveal">On Campus</span>
+                <h2 class="section-title reveal">Food Joints Inside Campus</h2>
+                <p class="section-desc reveal">A variety of dining options are available within the IIT(ISM) campus for registered participants.</p>
+
+                <div class="travel-grid reveal">
+                    <!-- Food 1 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Mezbaan</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Mezbaan</h3>
+                            <span class="type-badge">Restaurant</span>
+                        </div>
+                    </div>
+                    <!-- Food 2 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Domino's</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Domino's</h3>
+                            <span class="type-badge">Fast Food</span>
+                        </div>
+                    </div>
+                    <!-- Food 3 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Frespresso</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Frespresso</h3>
+                            <span class="type-badge">Café</span>
+                        </div>
+                    </div>
+                    <!-- Food 4 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Mini Mart</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Mini Mart</h3>
+                            <span class="type-badge">Convenience Store</span>
+                        </div>
+                    </div>
+                    <!-- Food 5 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Barista</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Barista</h3>
+                            <span class="type-badge">Café</span>
+                        </div>
+                    </div>
+                    <!-- Food 6 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>KFC</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>KFC</h3>
+                            <span class="type-badge">Fast Food</span>
+                        </div>
+                    </div>
+                    <!-- Food 7 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>Main Canteen</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Main Canteen</h3>
+                            <span class="type-badge">Canteen</span>
+                        </div>
+                    </div>
+                    <!-- Food 8 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <div class="img-placeholder">
+                                <i data-lucide="utensils"></i>
+                                <span>RD Tea Shop</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>RD Tea Shop</h3>
+                            <span class="type-badge">Tea Stall</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Places Section -->
+        <section id="explore" class="section">
+            <div class="container">
+                <span class="section-label reveal">Explore</span>
+                <h2 class="section-title reveal">Places to Visit Near Dhanbad</h2>
+                <p class="section-desc reveal">Take time to explore the natural and cultural attractions around Dhanbad during your visit.</p>
+
+                <div class="travel-grid reveal">
+                    <!-- Place 1 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~45 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Maithon Dam</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Maithon Dam</h3>
+                            <span class="type-badge">Natural Site</span>
+                        </div>
+                    </div>
+                    <!-- Place 2 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~8 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Birsa Munda Park</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Birsa Munda Park</h3>
+                            <span class="type-badge">Park</span>
+                        </div>
+                    </div>
+                    <!-- Place 3 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~15 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Chitahi Dham</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Chitahi Dham</h3>
+                            <span class="type-badge">Religious Site</span>
+                        </div>
+                    </div>
+                    <!-- Place 4 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~20 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Lilori Dham</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Lilori Dham</h3>
+                            <span class="type-badge">Religious Site</span>
+                        </div>
+                    </div>
+                    <!-- Place 5 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~10 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Chasnala Kalyanshwari Mandir</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Chasnala Kalyanshwari Mandir</h3>
+                            <span class="type-badge">Temple</span>
+                        </div>
+                    </div>
+                    <!-- Place 6 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~35 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Panchet Dam</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Panchet Dam</h3>
+                            <span class="type-badge">Natural Site</span>
+                        </div>
+                    </div>
+                    <!-- Place 7 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~25 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Bhatinda Fall</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Bhatinda Fall</h3>
+                            <span class="type-badge">Waterfall</span>
+                        </div>
+                    </div>
+                    <!-- Place 8 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~40 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Topchanchi Lake</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Topchanchi Lake</h3>
+                            <span class="type-badge">Natural Site</span>
+                        </div>
+                    </div>
+                    <!-- Place 9 -->
+                    <div class="travel-card">
+                        <div class="travel-card-img">
+                            <span class="distance-badge">~12 km</span>
+                            <div class="img-placeholder">
+                                <i data-lucide="mountain"></i>
+                                <span>Shakti Mandir</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>Shakti Mandir</h3>
+                            <span class="type-badge">Temple</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Directions Section -->
+        <section id="directions" class="section" style="background: var(--light-bg);">
+            <div class="container">
+                <span class="section-label reveal">Directions</span>
+                <h2 class="section-title reveal">Getting to IIT(ISM) Dhanbad</h2>
+
+                <div class="transport-grid reveal">
+                    <!-- Train -->
+                    <div class="transport-card">
+                        <i data-lucide="train" class="transport-icon"></i>
+                        <h3>By Train</h3>
+                        <p>Dhanbad Junction (DHN) is the nearest railway station, approximately 3 km from campus. It is well connected to all major Indian cities including Delhi, Mumbai, Kolkata, and Chennai.</p>
+                    </div>
+                    <!-- Air -->
+                    <div class="transport-card">
+                        <i data-lucide="plane" class="transport-icon"></i>
+                        <h3>By Air</h3>
+                        <p>The nearest airport is Birsa Munda Airport, Ranchi (IXR), approximately 180 km from Dhanbad. Taxis and buses are available from Ranchi to Dhanbad.</p>
+                    </div>
+                    <!-- Road -->
+                    <div class="transport-card">
+                        <i data-lucide="car" class="transport-icon"></i>
+                        <h3>By Road</h3>
+                        <p>Dhanbad is well connected by NH-2 and NH-19. Regular bus services operate from Kolkata (280 km), Patna (320 km), and other nearby cities.</p>
+                    </div>
+                </div>
+
+                <div class="map-wrapper reveal">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3638.178462059567!2d86.43918731500236!3d24.23685798435491!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f1a0bcd9e5a5a1%3A0x3a8ef3e3f3a3a3a3!2sIIT%20(ISM)%20Dhanbad!5e0!3m2!1sen!2sin"
+                        width="100%" height="400" style="border:0;" 
+                        allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Strip -->
+        <div class="container">
+            <div class="cta-banner reveal">
+                <div class="cta-content">
+                    <h2>Ready to Join Us?</h2>
+                    <p>Register now to secure your spot at IC ADIB-26 and be part of this landmark centenary year conference.</p>
+                    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="register.html" class="btn btn-accent">Register Now →</a>
+                        <a href="index.html" class="btn btn-outline">← Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <img src="images/imag_2.jpg" alt="IC ADIB Logo"
+                            style="height: 50px; width: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div class="footer-logo" style="margin-bottom: 0;">IC ADIB<span>-26</span></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.6); max-width: 350px; line-height: 1.8;">Organised by Department
+                        of Management Studies & Industrial Engineering, Indian Institute of Technology (Indian School of
+                        Mines) Dhanbad.</p>
+                    <div class="contact-list">
+                        <div class="contact-item"><i data-lucide="mail"></i> <a href="mailto:icadib26@iitism.ac.in">icadib26@iitism.ac.in</a></div>
+                        <div class="contact-item"><i data-lucide="phone"></i> <span>+91 00000 00000</span></div>
+                        <div class="contact-item"><i data-lucide="map-pin"></i> <span>DMS&IE, IIT (ISM) Dhanbad <br>826004, Jharkhand, India</span></div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Homepage</a></li>
+                        <li><a href="index.html#about">About Conference</a></li>
+                        <li><a href="index.html#tracks">Research Tracks</a></li>
+                        <li><a href="index.html#timeline">Important Dates</a></li>
+                        <li><a href="travel.html">Travel & Stay</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Actions</h5>
+                    <ul>
+                        <li><a href="register.html" style="color: var(--accent);">Submit Abstract</a></li>
+                        <li><a href="register.html">Register Now</a></li>
+                        <li><a href="#">Brochure PDF</a></li>
+                        <li><a href="#">Sponsorship</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>
+                    <img src="images/img_1.png" alt="IIT (ISM) Dhanbad 1926-2026 Centenary Banner" loading="lazy"
+                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8;">
+                    <p>&copy; 2026 IC ADIB-26 &middot; IIT(ISM) Dhanbad. All Rights Reserved.</p>
+                </div>
+                <div style="display:flex; gap: 1.5rem;">
+                    <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="twitter"></i></a>
+                    <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            
+            // Header Scroll Effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Sidebar Logic
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const closeSideNav = document.getElementById('closeSideNav');
+            const sideNav = document.getElementById('sideNav');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            const toggleSidebar = () => {
+                sideNav.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+                document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : '';
+            };
+
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            closeSideNav.addEventListener('click', toggleSidebar);
+            sidebarOverlay.addEventListener('click', toggleSidebar);
+
+            // Reveal Animation on Scroll
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
