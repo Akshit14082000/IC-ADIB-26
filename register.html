@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | IC ADIB-26</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #070B14;
+            --bg-dark-secondary: #0A111E;
+            --primary: #102136;
+            --accent: #FF5A1F;
+            --accent-glow: rgba(255, 90, 31, 0.4);
+            --light-bg: #F8FAFC;
+            --white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-dark: rgba(0, 0, 0, 0.08);
+
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+
+            --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+            width: 100%;
+            font-size: clamp(0.875rem, 2vw, 1.1rem);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-heading);
+            color: var(--text-dark);
+            line-height: 1.1;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        .section {
+            padding: clamp(3rem, 8vw, 8rem) 0;
+            position: relative;
+        }
+
+        /* Navbar */
+        header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 100;
+            transition: var(--transition-slow);
+        }
+
+        .navbar {
+            background: rgba(7, 11, 20, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header.scrolled .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .logo {
+            color: var(--primary);
+        }
+
+        .logo span.accent {
+            color: var(--accent);
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        header.scrolled .logo-divider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .nav-links a {
+            color: var(--text-muted);
+        }
+
+        header.scrolled .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Floating Dock Mobile */
+        .mobile-dock {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            width: 90%;
+            max-width: 450px;
+            background: rgba(10, 20, 40, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 0.8rem 1.5rem;
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-dock.active {
+            display: flex;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dock-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition-fast);
+            flex: 1;
+        }
+
+        .dock-item svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .dock-item span {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .dock-item:hover,
+        .dock-item.active {
+            color: var(--accent);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.2rem 2.5rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 100px;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg-dark);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        /* Typography */
+        .section-label {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3.5vw, 4rem);
+            letter-spacing: -1px;
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        /* Hero */
+        .page-hero {
+            background-color: var(--bg-dark);
+            padding: clamp(8rem, 15vw, 12rem) 0 clamp(4rem, 10vw, 6rem);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero h1 {
+            color: var(--white);
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page-hero p {
+            font-family: var(--font-mono);
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Fees Section */
+        .fees-section {
+            background: var(--light-bg);
+        }
+
+        .fees-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .fees-table th,
+        .fees-table td {
+            padding: 1.5rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .fees-table th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .fees-note {
+            margin-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 900px;
+            line-height: 1.7;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            background: var(--white);
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+
+        .payment-card {
+            background: var(--light-bg);
+            border: 1px solid var(--border-dark);
+            border-radius: 20px;
+            padding: 3rem;
+            transition: var(--transition-fast);
+        }
+
+        .payment-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .detail-row svg {
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            width: 140px;
+        }
+
+        .detail-value {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .qr-area {
+            text-align: center;
+        }
+
+        .qr-box {
+            background: var(--white);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: inline-block;
+            margin: 1.5rem 0;
+        }
+
+        .qr-box img {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .upi-id {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .upi-apps {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .upi-apps p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .app-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge-pill {
+            background: var(--white);
+            border: 1px solid var(--border-dark);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Banner */
+        .info-banner {
+            background: var(--bg-dark);
+            color: var(--white);
+            padding: 2.5rem 0;
+        }
+
+        .banner-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .banner-text {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .banner-text svg {
+            color: var(--accent);
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .navbar {
+                padding: 0.6rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .banner-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .banner-text {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fees-table thead {
+                display: none;
+            }
+
+            .fees-table tr {
+                display: block;
+                margin-bottom: 2rem;
+                border: 1px solid var(--border-dark);
+                border-radius: 12px;
+            }
+
+            .fees-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 1.2rem;
+                border-bottom: 1px solid var(--border-dark);
+            }
+
+            .fees-table td:last-child {
+                border-bottom: none;
+            }
+
+            .fees-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                text-transform: uppercase;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .detail-label {
+                width: 100%;
+            }
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--bg-dark);
+            color: var(--white);
+            padding: 8rem 0 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .contact-item svg {
+            color: var(--accent);
+            width: 24px;
+            height: 24px;
+        }
+
+        .contact-item a:hover {
+            color: var(--white);
+        }
+
+        .footer-column h5 {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-column ul {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.5);
+            transition: var(--transition-fast);
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="index.html" class="logo">
+                    <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
+                    <div>IC ADIB<span class="accent">-26</span></div>
+                </a>
+                <div class="logo-divider"></div>
+                <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
+                    style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
+            </div>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#tracks">Tracks</a>
+                <a href="index.html#timeline">Dates</a>
+                <a href="#" class="active">Fees</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Navigation Dock -->
+    <div class="mobile-dock" id="mobileDock">
+        <a href="index.html" class="dock-item"><i data-lucide="home"></i><span>Home</span></a>
+        <a href="index.html#about" class="dock-item"><i data-lucide="info"></i><span>About</span></a>
+        <a href="index.html#tracks" class="dock-item"><i data-lucide="layers"></i><span>Tracks</span></a>
+        <a href="index.html#timeline" class="dock-item"><i data-lucide="calendar"></i><span>Dates</span></a>
+        <a href="#" class="dock-item active"><i data-lucide="wallet"></i><span>Fees</span></a>
+    </div>
+
+    <main>
+        <!-- Page Hero -->
+        <section class="page-hero">
+            <div class="container">
+                <span class="section-label" style="color: rgba(255,255,255,0.5);">Join Us</span>
+                <h1 class="reveal">Conference Fees & Registration</h1>
+                <p class="reveal">IC ADIB-26 · 18th–19th September 2026</p>
+            </div>
+        </section>
+
+        <!-- Fees Table -->
+        <section class="section fees-section">
+            <div class="container">
+                <span class="section-label">Pricing</span>
+                <h2 class="section-title">Registration Fees</h2>
+
+                <div class="fees-wrapper reveal">
+                    <table class="fees-table">
+                        <thead>
+                            <tr>
+                                <th>Type of Participant</th>
+                                <th>Early Bird (+ 18% GST)</th>
+                                <th>Regular (+ 18% GST)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Type of Participant">Research Scholars / Student</td>
+                                <td data-label="Early Bird">INR 4,500</td>
+                                <td data-label="Regular">INR 5,500</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Faculty Members</td>
+                                <td data-label="Early Bird">INR 6,000</td>
+                                <td data-label="Regular">INR 8,000</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Industry Participants</td>
+                                <td data-label="Early Bird">INR 10,000</td>
+                                <td data-label="Regular">INR 12,000</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">International Participants</td>
+                                <td data-label="Early Bird">USD 200</td>
+                                <td data-label="Regular">USD 250</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Intl. Participants (Video Only)</td>
+                                <td data-label="Early Bird">USD 150</td>
+                                <td data-label="Regular">USD 200</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Delegates / Accompanying Persons</td>
+                                <td data-label="Early Bird">INR 6,000</td>
+                                <td data-label="Regular">INR 6,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="fees-note reveal">
+                    * Scholars/Students who only want to attend the pre-conference workshop
+                    can attend by paying INR 2,500 + 18% GST. Pre-conference is free for
+                    those who have registered as a participant. Accommodation may be arranged
+                    on campus on a sharing basis / single occupancy based on the availability
+                    of the Institute's Guest House / Hostels on payment basis.
+                </p>
+            </div>
+        </section>
+
+        <!-- Payment Details -->
+        <section class="section payment-section">
+            <div class="container">
+                <span class="section-label">How to Pay</span>
+                <h2 class="section-title">Payment Details</h2>
+
+                <div class="payment-grid">
+                    <!-- Bank Details -->
+                    <div class="payment-card reveal">
+                        <h3>IIT ISM CEP Account</h3>
+                        <div class="details-list">
+                            <div class="detail-row">
+                                <i data-lucide="building-2"></i>
+                                <span class="detail-label">Account Name</span>
+                                <span class="detail-value" id="accName">IIT ISM CEP ACCOUNT</span>
+                            </div>
+                            <div class="detail-row">
+                                <i data-lucide="hash"></i>
+                                <span class="detail-label">Account Number</span>
+                                <span class="detail-value" id="accNum">110261358281</span>
+                            </div>
+                            <div class="detail-row">
+                                <i data-lucide="landmark"></i>
+                                <span class="detail-label">Bank</span>
+                                <span class="detail-value" id="bankName">Canara Bank</span>
+                            </div>
+                            <div class="detail-row">
+                                <i data-lucide="code"></i>
+                                <span class="detail-label">IFS Code</span>
+                                <span class="detail-value" id="ifsc">CNRB0000986</span>
+                            </div>
+                            <div class="detail-row">
+                                <i data-lucide="globe"></i>
+                                <span class="detail-label">SWIFT Code</span>
+                                <span class="detail-value" id="swift">CNRBINBBBFD</span>
+                            </div>
+                        </div>
+
+                        <button id="copyBtn" class="btn btn-accent" style="width: 100%; margin-top: 2rem;">
+                            Copy Account Details
+                        </button>
+                    </div>
+
+                    <!-- QR Code -->
+                    <div class="payment-card reveal" style="text-align: center;">
+                        <h3>Scan & Pay</h3>
+                        <p style="color: var(--text-muted);">Scan the QR code below using any UPI app</p>
+
+                        <div class="qr-box">
+                            <img src="images/qr_code.png" alt="Scan & Pay — UPI QR Code" style="width:220px; height:220px; 
+                                   object-fit:contain; 
+                                   border-radius:12px;">
+                        </div>
+
+                        <p class="upi-id">UPI ID: 333670637358281@cnrb</p>
+
+                        <div class="upi-apps">
+                            <p>Accepted on all UPI apps</p>
+                            <div class="app-badges">
+                                <span class="badge-pill">GPay</span>
+                                <span class="badge-pill">PhonePe</span>
+                                <span class="badge-pill">Paytm</span>
+                                <span class="badge-pill">BHIM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Important Note Banner -->
+        <section class="info-banner">
+            <div class="container banner-content">
+                <div class="banner-text reveal">
+                    <i data-lucide="info"></i>
+                    <p>After completing payment, please email your 
+                        payment confirmation to <strong style="color: var(--accent);">icadib26@iitism.ac.in</strong> with 
+                        your name, institute, and participant category.</p>
+                </div>
+                <a href="mailto:icadib26@iitism.ac.in" class="btn btn-accent reveal">Contact Us</a>
+            </div>
+        </section>
+
+        <!-- Back Link -->
+        <div class="container" style="text-align: center; padding: 6rem 0;">
+            <a href="index.html" class="btn btn-outline reveal">
+                <i data-lucide="arrow-left" style="width: 20px;"></i> Back to Conference
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <img src="images/imag_2.jpg" alt="IC ADIB Logo"
+                            style="height: 50px; width: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div class="footer-logo" style="margin-bottom: 0;">IC ADIB<span>-26</span></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.6); max-width: 350px; line-height: 1.8;">Organised by Department
+                        of Management Studies & Industrial Engineering, Indian Institute of Technology (Indian School of
+                        Mines) Dhanbad.</p>
+                    <div class="contact-list">
+                        <div class="contact-item"><i data-lucide="mail"></i> <a
+                                href="mailto:icadib26@iitism.ac.in">icadib26@iitism.ac.in</a></div>
+                        <div class="contact-item"><i data-lucide="phone"></i> <span>+91 00000 00000</span></div>
+                        <div class="contact-item"><i data-lucide="map-pin"></i> <span>DMS&IE, IIT (ISM) Dhanbad
+                                <br>826004, Jharkhand, India</span></div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="index.html">Homepage</a></li>
+                        <li><a href="index.html#about">About Conference</a></li>
+                        <li><a href="index.html#tracks">Research Tracks</a></li>
+                        <li><a href="index.html#timeline">Important Dates</a></li>
+                        <li><a href="index.html#committee">Committee</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Actions</h5>
+                    <ul>
+                        <li><a href="#" style="color: var(--accent);">Submit Abstract</a></li>
+                        <li><a href="#pricing">Register Now</a></li>
+                        <li><a href="#">Brochure PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>
+                    <img src="images/img_1.png" alt="IIT (ISM) Dhanbad 1926-2026 Centenary Banner" loading="lazy"
+                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8;">
+                    <p>&copy; 2026 IC ADIB-26 &middot; IIT(ISM) Dhanbad. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+            const mobileDock = document.getElementById('mobileDock');
+
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY > 50;
+                header.classList.toggle('scrolled', scrolled);
+                
+                // Show dock after scrolling a bit on mobile
+                if (window.innerWidth <= 1024) {
+                    if (window.scrollY > 300) {
+                        mobileDock.classList.add('active');
+                    } else {
+                        mobileDock.classList.remove('active');
+                    }
+                }
+            });
+
+            // Reveal Animation
+            const animObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('active');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => animObserver.observe(el));
+
+            // Copy to Clipboard
+            const copyBtn = document.getElementById('copyBtn');
+            const bankDetails = `IIT ISM CEP ACCOUNT\nAccount No: 110261358281\nBank: Canara Bank\nIFS Code: CNRB0000986\nSWIFT: CNRBINBBBFD`;
+
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(bankDetails).then(() => {
+                    const originalText = copyBtn.innerText;
+                    copyBtn.innerText = 'Copied ✓';
+                    copyBtn.classList.add('btn-accent');
+                    setTimeout(() => {
+                        copyBtn.innerText = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

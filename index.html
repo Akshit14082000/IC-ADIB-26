@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IC ADIB-26 | International Conference on Advances in Sustainable Development, Innovation and Business</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons (replaces emojis with professional SVG icons) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-dark: #070B14;
+            --bg-dark-secondary: #0A111X;
+            --primary: #102136;
+            --accent: #FF5A1F;
+            --accent-glow: rgba(255, 90, 31, 0.4);
+            --light-bg: #F8FAFC;
+            --white: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-dark: rgba(0, 0, 0, 0.08);
+
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+
+            --transition-slow: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-fast: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+            width: 100%;
+            font-size: clamp(0.875rem, 2vw, 1.1rem);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-heading);
+            color: var(--text-dark);
+            line-height: 1.1;
+            font-weight: 500;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+        }
+
+        .section {
+            padding: clamp(3rem, 8vw, 8rem) 0;
+            position: relative;
+        }
+
+        /* Floating Glass Header */
+        header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            z-index: 100;
+            transition: var(--transition-slow);
+        }
+
+        .navbar {
+            background: rgba(7, 11, 20, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 0.75rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header.scrolled .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--border-dark);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .logo {
+            color: var(--primary);
+        }
+
+
+
+
+
+        /* Countdown */
+        .countdown-wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 3.5rem;
+            /* Added margin for spacing b/w timer and buttons */
+            max-width: 600px;
+        }
+
+        .count-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition-fast);
+        }
+
+        .count-block:hover {
+            border-color: var(--accent);
+            background: rgba(255, 90, 31, 0.05);
+        }
+
+        .count-num {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 0.3rem;
+        }
+
+        .count-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .countdown-wrap {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .count-num {
+                font-size: 1.8rem;
+            }
+
+            .count-block {
+                padding: 1rem 0.5rem;
+            }
+        }
+
+        .logo span.accent {
+            color: var(--accent);
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        header.scrolled .logo-divider {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-institute {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-fast);
+            position: relative;
+        }
+
+        header.scrolled .nav-links a {
+            color: var(--text-muted);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--white);
+        }
+
+        header.scrolled .nav-links a:hover,
+        header.scrolled .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a.active::after,
+        .nav-links a:hover::after {
+            opacity: 1;
+        }
+
+        .grid-menu-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            align-items: center;
+            justify-content: center;
+        }
+
+        header.scrolled .grid-menu-btn {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .grid-dots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            width: 18px;
+        }
+
+        .grid-dots span {
+            width: 4px;
+            height: 4px;
+            background: var(--white);
+            border-radius: 1px;
+            transition: var(--transition-fast);
+        }
+
+        header.scrolled .grid-dots span {
+            background: var(--primary);
+        }
+
+        .grid-menu-btn:hover .grid-dots span {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Sidebar Styles */
+        .side-navigation {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100vh;
+            background: var(--bg-dark);
+            z-index: 2000;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-navigation.active {
+            right: 0;
+        }
+
+        .side-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4rem;
+        }
+
+        .side-logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .side-logo span {
+            color: var(--accent);
+        }
+
+        .close-side-nav {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .close-side-nav:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .side-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .side-link {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition-fast);
+        }
+
+        .side-link:hover,
+        .side-link.active {
+            color: var(--accent);
+            padding-left: 10px;
+        }
+
+        .side-nav-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.2rem 2.5rem;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 100px;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border: none;
+            overflow: hidden;
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--text-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Typography */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1.25rem;
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2.5rem;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3.5vw, 4rem);
+            letter-spacing: -1px;
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .lead-text {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+
+        .body-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            display: grid;
+            grid-template-columns: 55% 45%;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            padding: 8rem 4rem 6rem 6rem;
+            /* Increased bottom padding */
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-right {
+            height: 100%;
+            position: relative;
+        }
+
+        .hero-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: saturate(0.6);
+        }
+
+        .hero-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, var(--bg-dark) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+
+        .glow-1 {
+            width: 700px;
+            height: 700px;
+            background: #1a3a5c;
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: rgba(232, 98, 42, 0.6);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-70px) scale(1.1);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .title-display {
+            font-size: clamp(1.8rem, 5vw, 6rem);
+            color: var(--white);
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .title-display i {
+            font-style: italic;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            padding: 2rem 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: var(--font-body);
+            font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+        }
+
+        .meta-item svg {
+            color: var(--accent);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Stats */
+        .stats-wrap {
+            position: relative;
+            z-index: 20;
+            margin-top: -1.5rem;
+            /* Further reduced to prevent overlapping buttons */
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-dark);
+            overflow: hidden;
+        }
+
+        .stat-card {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-card:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: var(--border-dark);
+        }
+
+        .stat-val {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 8vw, 4rem);
+            line-height: 1;
+            color: var(--bg-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-val span {
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* About */
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            padding: 2.5rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: var(--transition-fast);
+        }
+
+        .feature-item:hover {
+            background: var(--white);
+            border-color: var(--border-dark);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+        }
+
+        .feature-item h4 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Institution */
+        .institution-section {
+            background: var(--bg-dark);
+            color: var(--white);
+        }
+
+        .institution-section .section-title {
+            color: var(--white);
+        }
+
+        .inst-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .inst-block {
+            padding: 5rem 4rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inst-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255, 90, 31, 0.08), transparent 60%);
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .inst-block:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .inst-block:hover::before {
+            opacity: 1;
+        }
+
+        .inst-block h3 {
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .inst-block p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .inst-footer-tag {
+            display: inline-block;
+            margin-top: 3rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        /* Tracks (Bento Grid) */
+        .tracks-section {
+            background-color: var(--light-bg);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+
+        .track-cell {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid var(--border-dark);
+            transition: var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            grid-column: span 4;
+        }
+
+        .track-cell:nth-child(1),
+        .track-cell:nth-child(2) {
+            grid-column: span 6;
+        }
+
+        .track-cell:nth-child(6),
+        .track-cell:nth-child(7) {
+            grid-column: span 6;
+        }
+
+        .track-cell:hover {
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.06);
+            transform: translateY(-5px);
+        }
+
+        .track-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+        }
+
+        .track-num {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .track-icon {
+            color: var(--accent);
+            opacity: 0.7;
+            transition: var(--transition-fast);
+            width: 32px;
+            height: 32px;
+        }
+
+        .track-cell:hover .track-icon {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+        .track-cell h3 {
+            font-family: var(--font-body);
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-top: auto;
+        }
+
+        /* Timeline Editorial */
+        .timeline-wrapper {
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--border-dark);
+            transform: translateX(-50%);
+        }
+
+        .timeline-node {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            margin-bottom: 5rem;
+            position: relative;
+        }
+
+        .timeline-node:nth-child(even) .node-content {
+            grid-column: 1;
+            grid-row: 1;
+            text-align: right;
+        }
+
+        .timeline-node:nth-child(odd) .node-content {
+            grid-column: 2;
+        }
+
+        .timeline-node:nth-child(even) .node-date {
+            grid-column: 2;
+            text-align: left;
+        }
+
+        .node-date {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--accent);
+            text-align: right;
+            letter-spacing: 1px;
+        }
+
+        .node-content h3 {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .node-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 14px;
+            background: var(--white);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--white), 0 0 0 5px var(--border-dark);
+            transition: var(--transition-fast);
+        }
+
+        .timeline-node:hover .node-dot {
+            background: var(--accent);
+            box-shadow: 0 0 0 4px var(--white), 0 0 0 8px var(--accent-glow);
+        }
+
+        /* Banner */
+        .cta-banner {
+            margin: 8rem 0;
+            background: linear-gradient(135deg, var(--bg-dark), #101c30);
+            border-radius: 24px;
+            text-align: center;
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+            color: var(--white);
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 90, 31, 0.15) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            color: var(--white);
+            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            letter-spacing: -1px;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3.5rem;
+        }
+
+        /* Registration */
+        .fees-wrapper {
+            background: var(--white);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+        }
+
+        .fees-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .fees-table th,
+        .fees-table td {
+            padding: 2rem 3rem;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .fees-table th {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            background: var(--light-bg);
+            font-weight: 700;
+        }
+
+        .fees-table td {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+        }
+
+        .fees-table td:first-child {
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .fees-table td:nth-child(2) {
+            background: rgba(255, 90, 31, 0.03);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .fees-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .fees-note {
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 900px;
+        }
+
+        /* Committee */
+        .committee-section {
+            background: var(--light-bg);
+        }
+
+        .section-header-inline {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .section-header-inline .section-title {
+            margin-bottom: 0;
+        }
+
+        .btn-inline-link {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--accent);
+            border-radius: 100px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-inline-link:hover {
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 5px 15px var(--accent-glow);
+        }
+
+        .committee-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
+            background: #f1f3f5;
+            color: var(--text-dark);
+        }
+
+        .tab-btn:hover {
+            background: #e9ecef;
+        }
+
+        .tab-btn.active {
+            background: #FF5A1F;
+            /* Vibrant coral/red from reference */
+            color: var(--white);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .committee-tier {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .committee-tier.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tier-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .tier-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .tier-title::before,
+        .tier-title::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.3;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Modern Committee Card */
+        .committee-card {
+            background: var(--white);
+            border: 1px solid var(--border-dark);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+        }
+
+        .committee-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08);
+        }
+
+        .committee-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--accent);
+            transition: var(--transition-slow);
+        }
+
+        .committee-card:hover::before {
+            height: 100%;
+        }
+
+        .committee-card h4 {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .committee-card .role-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .committee-card .tag {
+            display: inline-flex;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            background: rgba(255, 90, 31, 0.08);
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+
+        .committee-card .email-link {
+            margin-top: auto;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: var(--transition-fast);
+        }
+
+        .committee-card:hover .email-link {
+            color: var(--text-dark);
+        }
+
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .adv-item {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: var(--transition-fast);
+        }
+
+        .adv-item:hover {
+            background: var(--white);
+            border-color: var(--border-dark);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.03);
+            transform: translateX(5px);
+        }
+
+        .adv-item h4 {
+            font-size: 1.05rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Footer */
+        .footer-section {
+            background: var(--bg-dark);
+            color: var(--white);
+            padding: 8rem 0 3rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .contact-item svg {
+            color: var(--accent);
+            width: 24px;
+            height: 24px;
+        }
+
+        .contact-item a:hover {
+            color: var(--white);
+        }
+
+        .footer-column h5 {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--white);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-column ul {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-column a {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-column a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-light);
+            padding-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           RESPONSIVE BREAKPOINTS
+           ========================================================================== */
+
+        @media (max-width: 1440px) {
+            .container {
+                max-width: 1280px;
+            }
+        }
+
+        @media (max-width: 1280px) {
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .track-cell,
+            .track-cell:nth-child(1),
+            .track-cell:nth-child(2),
+            .track-cell:nth-child(6),
+            .track-cell:nth-child(7) {
+                grid-column: span 1;
+            }
+
+            .profiles-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 60% 40%;
+            }
+
+            .hero-left {
+                padding: 8rem 3rem 4rem 4rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .grid-menu-btn {
+                display: flex;
+            }
+
+            header {
+                width: 95%;
+                top: 1rem;
+            }
+
+            .navbar {
+                padding: 0.6rem 1.5rem;
+            }
+
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-layout {
+                gap: 4rem;
+            }
+
+            .profiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .profiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .adv-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-right {
+                display: none;
+            }
+
+            .hero-left {
+                padding: 8rem 2rem 4rem 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .hero-meta {
+                justify-content: center;
+                gap: 2rem;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card:not(:last-child)::after {
+                display: none;
+            }
+
+            .stat-card {
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-dark);
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .about-layout img {
+                margin-top: 2rem !important;
+            }
+
+            .inst-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .inst-block {
+                padding: 3rem 2rem;
+            }
+
+            /* Timeline Mobile */
+            .timeline-line {
+                left: 20px;
+                transform: none;
+            }
+
+            .timeline-node {
+                grid-template-columns: 1fr;
+                padding-left: 50px;
+                gap: 1rem;
+                text-align: left !important;
+            }
+
+            .timeline-node:nth-child(even) .node-content,
+            .timeline-node:nth-child(odd) .node-content {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .timeline-node:nth-child(even) .node-date,
+            .timeline-node:nth-child(odd) .node-date {
+                grid-column: 1;
+                text-align: left;
+                font-size: 1rem;
+            }
+
+            .node-dot {
+                left: 20px;
+                transform: translate(-50%, -50%);
+            }
+
+            .fees-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .adv-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-institute {
+                display: none;
+            }
+
+            .logo-divider {
+                display: none;
+            }
+
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.25rem;
+                gap: 0.5rem;
+            }
+
+            .logo img {
+                height: 32px !important;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-item {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            /* Fees Mobile Cards */
+            .fees-table thead {
+                display: none;
+            }
+
+            .fees-table tr {
+                display: block;
+                margin-bottom: 2rem;
+                border: 1px solid var(--border-dark);
+                border-radius: 12px;
+            }
+
+            .fees-table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 1.2rem;
+                border-bottom: 1px solid var(--border-dark);
+            }
+
+            .fees-table td:last-child {
+                border-bottom: none;
+            }
+
+            .fees-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                text-transform: uppercase;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .title-display {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 1rem 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-val {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <nav class="navbar">
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="#home" class="logo">
+                    <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
+                    <div>IC ADIB<span class="accent">-26</span></div>
+                </a>
+                <div class="logo-divider"></div>
+                <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
+                    style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
+            </div>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#tracks">Tracks</a>
+                <a href="#timeline">Dates</a>
+                <a href="#registration">Fees</a>
+                <a href="#committee">Committee</a>
+            </div>
+
+            <button class="grid-menu-btn" id="sidebarToggle" aria-label="Toggle Menu">
+                <div class="grid-dots">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Slide-in Sidebar -->
+    <aside class="side-navigation" id="sideNav">
+        <div class="side-nav-header">
+            <a href="#home" class="side-logo">
+                IC ADIB<span>-26</span>
+            </a>
+            <button class="close-side-nav" id="closeSideNav">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <nav class="side-nav-links">
+            <a href="#home" class="side-link active">Home</a>
+            <a href="#about" class="side-link">About</a>
+            <a href="#tracks" class="side-link">Tracks</a>
+            <a href="#timeline" class="side-link">Dates</a>
+            <a href="#registration" class="side-link">Fees</a>
+            <a href="#committee" class="side-link">Committee</a>
+        </nav>
+
+        <div class="side-nav-footer">
+            <a href="register.html" class="btn btn-accent" style="width: 100%;">Register Now</a>
+        </div>
+    </aside>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="glow-orb glow-1"></div>
+            <div class="glow-orb glow-2"></div>
+
+            <div class="hero-left">
+                <div class="hero-content">
+                    <!-- <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem;">
+                        <img src="images/imag_2.jpg" alt="IC ADIB Branding" style="width: 100px; height: auto; border-radius: 12px; border: 1px solid var(--border-light); background: white; padding: 5px;">
+                        <div class="badge reveal" style="margin-bottom: 0;">Centenary Year 2026</div>
+                    </div> -->
+
+                    <h1 class="title-display reveal" style="transition-delay: 100ms;">Advances in <i>Sustainable</i>
+                        Development & Business</h1>
+                    <p class="hero-subtitle reveal" style="transition-delay: 200ms; margin-top: 1rem;">International
+                        Conference · IC ADIB-26</p>
+
+                    <div class="hero-meta reveal" style="transition-delay: 300ms;">
+                        <div class="meta-item"><i data-lucide="calendar"></i> 18th – 19th Sept 2026</div>
+                        <div class="meta-item"><i data-lucide="map-pin"></i> IIT(ISM) Dhanbad</div>
+                        <div class="meta-item"><i data-lucide="graduation-cap"></i> Pre-Conference: 17th Sept</div>
+                    </div>
+
+                    <!-- Conference Countdown -->
+                    <div class="countdown-wrap reveal" style="transition-delay: 350ms;">
+                        <div class="count-block">
+                            <span class="count-num" id="days">00</span>
+                            <span class="count-label">Days</span>
+                        </div>
+                        <div class="count-block">
+                            <span class="count-num" id="hours">00</span>
+                            <span class="count-label">Hours</span>
+                        </div>
+                        <div class="count-block">
+                            <span class="count-num" id="minutes">00</span>
+                            <span class="count-label">Mins</span>
+                        </div>
+                        <div class="count-block">
+                            <span class="count-num" id="seconds">00</span>
+                            <span class="count-label">Secs</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-actions reveal" style="transition-delay: 400ms;">
+                        <a href="register.html" class="btn btn-accent">Submit Abstract <i data-lucide="arrow-right"
+                                style="width:20px;"></i></a>
+                        <a href="#" class="btn btn-outline">View Brochure</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <img src="images/imag_1.jpg" alt="Campus Image">
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <div class="container stats-wrap">
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <div class="stat-val count" data-val="10">0</div>
+                    <div class="stat-label">Tracks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val count" data-val="3">0</div>
+                    <div class="stat-label">Days</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val">Hybrid</div>
+                    <div class="stat-label">Mode</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-val count" data-val="100">0<span>+</span></div>
+                    <div class="stat-label">Years Legacy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About -->
+        <section id="about" class="section">
+            <div class="container about-layout">
+                <div class="reveal">
+                    <span class="section-label">Overview</span>
+                    <h2 class="section-title">Shaping the Future of Sustainable Excellence</h2>
+                    <p class="lead-text">The International Conference on Advances in Sustainable Development, Innovation
+                        and Business (IC ADIB-26) aims to provide a global platform for academicians, researchers,
+                        industry professionals, policymakers and doctoral scholars to deliberate on the evolving role of
+                        sustainability in a digitally transformed world.</p>
+                    <p class="body-text">In the context of rapid advancements in digital technologies such as artificial
+                        intelligence, analytics, automation, and Industry 5.0, organizations are increasingly required
+                        to integrate sustainability, ethics, and responsible governance into their strategic and
+                        operational frameworks. This conference seeks to explore innovative management practices that
+                        balance economic performance with social responsibility and environmental stewardship. The
+                        conference will foster interdisciplinary dialogue, encourage evidence-based research, and
+                        facilitate knowledge exchange on how digital transformation can act as a catalyst for
+                        sustainable and inclusive growth across sectors.</p>
+                    <img src="images/imag_1.jpg" alt="IIT (ISM) Dhanbad Campus Building" loading="lazy"
+                        style="border-radius: 16px; margin-top: 3rem; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);">
+                </div>
+                <div class="about-features reveal">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i data-lucide="globe"></i></div>
+                        <div>
+                            <h4>Global Platform</h4>
+                            <p class="body-text" style="font-size: 0.95rem;">Empowering dialogue among international
+                                academicians and industry professionals.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i data-lucide="cpu"></i></div>
+                        <div>
+                            <h4>Digital Transformation</h4>
+                            <p class="body-text" style="font-size: 0.95rem;">Addressing AI, Industry 5.0, and their
+                                strategic management impact.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i data-lucide="leaf"></i></div>
+                        <div>
+                            <h4>Sustainable Growth</h4>
+                            <p class="body-text" style="font-size: 0.95rem;">Balancing robust economic performance with
+                                environmental responsibility.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Institution -->
+        <section class="section institution-section">
+            <div class="container">
+                <span class="section-label">The Hosts</span>
+                <h2 class="section-title">A Century of Academic Innovation</h2>
+                <div class="inst-grid">
+                    <div class="inst-block reveal">
+                        <h3>IIT (ISM) Dhanbad</h3>
+                        <p>Established in 1926, IIT (ISM) Dhanbad is one of India's premier institutions known for
+                            excellence in teaching, research, and innovation. Originally founded to cater to the mining
+                            and mineral sectors, the institute has evolved into a comprehensive technological university
+                            with global recognition. IIT (ISM) Dhanbad is committed to advancing knowledge through
+                            cutting-edge research, industry collaboration, and societal engagement. The institute
+                            actively promotes interdisciplinary learning and innovation to address complex challenges
+                            related to sustainability, technology, and economic development.</p>
+                        <div class="inst-footer-tag">Centenary Year 2026</div>
+                    </div>
+                    <div class="inst-block reveal" style="transition-delay: 150ms;">
+                        <h3>Management Studies & IE</h3>
+                        <p>The Department of Management Studies & Industrial Engineering at IIT (ISM) Dhanbad is a
+                            multidisciplinary department dedicated to developing future-ready management professionals
+                            and researchers. The department integrates management science, industrial engineering,
+                            analytics, and technology-driven decision-making. With a strong focus on research, industry
+                            relevance, and societal impact, the department emphasizes areas such as operations
+                            excellence, human resource management, finance, marketing. Through academic programs,
+                            executive training, and international collaborations, DMS&IE actively contributes to
+                            advancing responsible and innovative management practices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracks -->
+        <section id="tracks" class="section tracks-section">
+            <div class="container">
+                <span class="section-label">Research Areas</span>
+                <h2 class="section-title">Conference Tracks</h2>
+                <div class="bento-grid">
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">01</span><i data-lucide="building-2"
+                                class="track-icon"></i></div>
+                        <h3>Sustainable Strategy and Corporate Governance</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">02</span><i data-lucide="network"
+                                class="track-icon"></i></div>
+                        <h3>AI, Analytics, and Digital Transformation</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">03</span><i data-lucide="sprout"
+                                class="track-icon"></i></div>
+                        <h3>Sustainability, ESG, and Responsible Management</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">04</span><i data-lucide="users"
+                                class="track-icon"></i></div>
+                        <h3>Human Resource Management and Future of Work</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">05</span><i data-lucide="pie-chart"
+                                class="track-icon"></i></div>
+                        <h3>Marketing, Consumer Analytics, and Sustainable Value Creation</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">06</span><i data-lucide="settings"
+                                class="track-icon"></i></div>
+                        <h3>Operations, Supply Chain, and Industry 5.0</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">07</span><i data-lucide="line-chart"
+                                class="track-icon"></i></div>
+                        <h3>Finance, Accounting, and FinTech for Sustainability</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">08</span><i data-lucide="lightbulb"
+                                class="track-icon"></i></div>
+                        <h3>Innovation, Entrepreneurship, and Startups</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">09</span><i data-lucide="landmark"
+                                class="track-icon"></i></div>
+                        <h3>Public Policy, Governance, and Smart Cities</h3>
+                    </div>
+                    <div class="track-cell reveal">
+                        <div class="track-header"><span class="track-num">10</span><i data-lucide="globe-2"
+                                class="track-icon"></i></div>
+                        <h3>Global Business, Ethics, and Cross-Cultural Management</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="section">
+            <div class="container">
+                <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <span class="section-label">Schedule</span>
+                    <h2 class="section-title" style="margin-bottom: 1.5rem;">Important Dates</h2>
+                    <p class="body-text">All deadlines are tentative and subject to change.</p>
+                </div>
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">15th May 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Abstract Submission Deadline</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">15th June 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Notification of Abstract Acceptance</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">15th July 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Full Paper Submission Deadline</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">30th July 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Notification of Full Paper Acceptance</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">15th August 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Early Bird Registration Deadline</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">17th September 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Pre-Conference Seminar</h3>
+                        </div>
+                    </div>
+                    <div class="timeline-node reveal">
+                        <div class="node-date">18th–19th September 2026</div>
+                        <div class="node-dot"></div>
+                        <div class="node-content">
+                            <h3>Conference Dates</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Banner -->
+        <div class="container">
+            <div class="cta-banner reveal">
+                <div class="cta-content">
+                    <h2>Call for Papers</h2>
+                    <p>The Organising Committee of IC ADIB-26 cordially invites original and unpublished research
+                        papers, conceptual papers, review articles, extended abstract from academicians, students,
+                        industry professionals, policymakers, and doctoral scholars. The conference aims to promote
+                        scholarly dialogue on how digital transformation, analytics, and emerging technologies can be
+                        leveraged to foster sustainable, ethical, and responsible management practices across industries
+                        and institutions. Those who do not want to send full paper may send extended abstract only.</p>
+                    <p
+                        style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-top: -1.5rem; margin-bottom: 3.5rem;">
+                        Note: Full paper if accepted may be considered for publication in Scopus indexed journal.
+                        Extended abstract accepted and registered for presentation will be published in conference
+                        proceedings.</p>
+                    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="register.html" class="btn btn-accent">Submit Abstract <i data-lucide="arrow-right"
+                                style="width:20px;"></i></a>
+                        <a href="#" class="btn btn-outline">Download Brochure</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration -->
+        <section id="registration" class="section tracks-section">
+            <div class="container">
+                <span class="section-label">Pricing</span>
+                <div style="display:flex; align-items:center; gap:2rem; 
+                            flex-wrap:wrap; margin-bottom:4rem;
+                            justify-content:space-between;">
+                    <h2 class="section-title" style="margin-bottom:0;">
+                        Registration Fees
+                    </h2>
+                    <a href="register.html" class="btn btn-accent">
+                        Register Now
+                        <i data-lucide="arrow-right" style="width:20px;"></i>
+                    </a>
+                </div>
+                <div class="fees-wrapper reveal">
+                    <table class="fees-table">
+                        <thead>
+                            <tr>
+                                <th>Type of Participant</th>
+                                <th>Early Bird Registration Fees (+18% GST)</th>
+                                <th>Regular Registration Fees (+18% GST)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Type of Participant">Research Scholars / Students</td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">INR 4,500</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">INR 5,500</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Faculty Members</td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">INR 6,000</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">INR 8,000</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Industry Participants</td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">INR 10,000</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">INR 12,000</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">International Participants</td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">USD 200</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">USD 250</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">International Participants (Video Conference Only)
+                                </td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">USD 150</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">USD 200</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Type of Participant">Delegates / Accompanying Persons</td>
+                                <td data-label="Early Bird Registration Fees (+18% GST)">INR 6,000</td>
+                                <td data-label="Regular Registration Fees (+18% GST)">INR 6,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <p class="fees-note reveal">* Scholars/Students who only want to attend the pre-conference workshop can attend by paying the registration fee of INR 2,500 + 18% GST. Pre-conference is free for those who have registered as a participant. Accommodation may be arranged on campus on a sharing basis / single occupancy based on the availability of the Institute's Guest House / Hostels on payment basis.</p>
+                <p class="fees-note reveal" style="margin-top: 1.5rem; border-top: 1px solid var(--border-dark); padding-top: 1.5rem;"><strong>Payment Details — Conference fees to be submitted to:</strong><br>
+                IIT ISM CEP ACCOUNT | Account No: 110261358281 | IFS Code: CNRB0000986 | Bank: Canara Bank | SWIFT CODE: CNRBINBBBFD</p> -->
+            </div>
+        </section>
+
+        <!-- Committee -->
+        <section id="committee" class="section">
+            <div class="container">
+                <span class="section-label">Leadership</span>
+                <h2 class="section-title">Organizing Committee</h2>
+
+                <div class="committee-tabs reveal">
+                    <button class="tab-btn active" data-tier="patrons">Patrons</button>
+                    <button class="tab-btn" data-tier="core">Core Committee</button>
+                    <button class="tab-btn" data-tier="internal">Internal Advisory Committee</button>
+                </div>
+
+                <div id="patrons" class="committee-tier active">
+                    <div class="tier-header">
+                        <div class="tier-title">Conference Patrons</div>
+                    </div>
+                    <div class="profiles-grid">
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Prem Vrat</h4>
+                                <p class="role-desc">Chairperson, BoG, IIT (ISM) Dhanbad</p>
+                            </div>
+                            <span class="tag">Chief Patron</span>
+                        </div>
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Sukumar Mishra</h4>
+                                <p class="role-desc">Director, IIT (ISM) Dhanbad</p>
+                            </div>
+                            <span class="tag">Patron</span>
+                        </div>
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Dheeraj Kumar</h4>
+                                <p class="role-desc">Dy. Director, IIT (ISM) Dhanbad</p>
+                            </div>
+                            <span class="tag">Co-Patron</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="core" class="committee-tier">
+                    <div class="tier-header">
+                        <div class="tier-title">Core Organizing Committee</div>
+                    </div>
+                    <div class="profiles-grid">
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Sandeep Mondal</h4>
+                                <p class="role-desc">HOD, DMS&IE</p>
+                            </div>
+                            <span class="tag">Chairperson</span>
+                        </div>
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Himanshu Gupta</h4>
+                                <p class="role-desc">Conference Convenor</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <span class="tag">Convenor</span>
+                                <a href="mailto:himanshug@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                    himanshug@iitism.ac.in</a>
+                            </div>
+                        </div>
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Shashank Bansal</h4>
+                                <p class="role-desc">Conference Co-Convenor</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <span class="tag">Co-Convenor</span>
+                                <a href="mailto:shashank@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                    shashank@iitism.ac.in</a>
+                            </div>
+                        </div>
+                        <div class="committee-card">
+                            <div>
+                                <h4>Prof. Preeti Roy</h4>
+                                <p class="role-desc">Organizing Secretary</p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                                <span class="tag">Secretary</span>
+                                <a href="mailto:preetir@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                    preetir@iitism.ac.in</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="internal" class="committee-tier">
+                    <div class="tier-header">
+                        <div class="tier-title">Internal Advisory Committee</div>
+                    </div>
+                    <div class="adv-grid">
+                        <div class="adv-item">
+                            <h4>Prof. Mritunjay Kumar Singh</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Alok Kumar Das</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Rajni Singh</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Rajeev Upadhyay</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Sarat Kumar Das</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Parthasarathi Das</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Amit Rai Dixit</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Sunil Kumar Gupta</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. J K Pattanayak</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Mohd Irfan</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. G. S. Pathak</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Shikha Singh</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Saumya Singh</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Aparna Krishna</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. K. S. Thyagaraj</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Rashmi Singh</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Niladri Das</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Sabnam Basu</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Krishnendu Shaw</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Aamna Khan</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Mrinalini Pandey</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Esha Saha</h4>
+                        </div>
+                        <div class="adv-item">
+                            <h4>Prof. Bibhas Chandra</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <img src="images/imag_2.jpg" alt="IC ADIB Logo"
+                            style="height: 50px; width: auto; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <div class="footer-logo" style="margin-bottom: 0;">IC ADIB<span>-26</span></div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.6); max-width: 350px; line-height: 1.8;">Organised by Department
+                        of Management Studies & Industrial Engineering, Indian Institute of Technology (Indian School of
+                        Mines) Dhanbad.</p>
+                    <div class="contact-list">
+                        <div class="contact-item"><i data-lucide="mail"></i> <a
+                                href="mailto:icadib26@iitism.ac.in">icadib26@iitism.ac.in</a></div>
+                        <div class="contact-item"><i data-lucide="phone"></i> <span>+91 00000 00000</span></div>
+                        <div class="contact-item"><i data-lucide="map-pin"></i> <span>DMS&IE, IIT (ISM) Dhanbad
+                                <br>826004, Jharkhand, India</span></div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#home">Homepage</a></li>
+                        <li><a href="#about">About Conference</a></li>
+                        <li><a href="#tracks">Research Tracks</a></li>
+                        <li><a href="#timeline">Important Dates</a></li>
+                        <li><a href="#committee">Committee</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h5>Actions</h5>
+                    <ul>
+                        <li><a href="register.html" style="color: var(--accent);">Submit Abstract</a></li>
+                        <li><a href="register.html">Register Now</a></li>
+                        <li><a href="#">Brochure PDF</a></li>
+                        <li><a href="#">Sponsorship</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>
+                    <img src="images/img_1.png" alt="IIT (ISM) Dhanbad 1926-2026 Centenary Banner" loading="lazy"
+                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8; transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                    <p>&copy; 2026 IC ADIB-26 &middot; IIT(ISM) Dhanbad. All Rights Reserved.</p>
+                </div>
+                <div style="display:flex; gap: 1.5rem;">
+                    <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="twitter"></i></a>
+                    <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('header');
+
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-links a');
+
+            // Countdown Logic
+            const targetDate = new Date('September 18, 2026 09:00:00').getTime();
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.querySelector('.countdown-wrap').innerHTML = "<div class='stat-val' style='color: var(--accent); grid-column: span 4;'>Conference is Live!</div>";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = String(days).padStart(2, '0');
+                document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+            };
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+
+
+            // Committee Tabs
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tiers = document.querySelectorAll('.committee-tier');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetTier = btn.getAttribute('data-tier');
+
+                    // Update buttons
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Update tiers
+                    tiers.forEach(tier => {
+                        tier.classList.remove('active');
+                        if (tier.id === targetTier) {
+                            tier.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+
+
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+
+                let current = '';
+                sections.forEach(sec => {
+                    const secTop = sec.offsetTop;
+                    if (pageYOffset >= secTop - 200) {
+                        current = sec.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').includes(current)) a.classList.add('active');
+                });
+
+                sideLinks.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').includes(current)) a.classList.add('active');
+                });
+
+
+            });
+
+            // Reveal Animation
+            const animObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('active');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => animObserver.observe(el));
+
+            // Counter Animation
+            const countObserver = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        const target = +e.target.getAttribute('data-val');
+                        let current = 0, step = target / 60;
+                        const update = () => {
+                            current += step;
+                            if (current < target) {
+                                e.target.childNodes[0].nodeValue = Math.ceil(current);
+                                requestAnimationFrame(update);
+                            }
+                            else e.target.childNodes[0].nodeValue = target;
+                        };
+                        update(); countObserver.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.count').forEach(el => countObserver.observe(el));
+        });
+    </script>
+</body>
+
+</html>
