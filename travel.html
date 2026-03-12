@@ -400,17 +400,25 @@
 
         .meta-item svg { color: var(--accent); }
 
-        /* Grid System */
+        /* Directory Card Redesign */
         .travel-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2.5rem;
+            gap: 2rem;
         }
 
         .section-title {
             font-size: clamp(1.8rem, 3.5vw, 3rem);
-            margin-bottom: 1rem;
+            margin-top: 0.5rem;
         }
 
         .section-desc {
@@ -420,114 +428,136 @@
             margin-bottom: 3rem;
         }
 
-        /* Travel Card */
-        .travel-card {
-            background: var(--white);
-            border-radius: 16px;
+        .count-badge {
+            background: var(--light-bg);
             border: 1px solid var(--border-dark);
-            overflow: hidden;
+            border-radius: 100px;
+            padding: 0.4rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .dark-section .count-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .directory-card {
+            background: var(--white);
+            border: 1px solid var(--border-dark);
+            border-radius: 16px;
+            padding: 1.5rem 1.75rem;
+            display: grid;
+            grid-template-columns: 56px 1fr auto;
+            align-items: center;
+            gap: 1.25rem;
             transition: var(--transition-fast);
-            display: flex;
-            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
         }
 
-        .travel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        .directory-card:hover {
+            transform: translateX(6px);
             border-color: var(--accent);
+            box-shadow: -4px 0 0 0 var(--accent), 0 8px 24px rgba(0,0,0,0.06);
         }
 
-        .travel-card-img {
-            height: 180px;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2a3a 100%);
+        .icon-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .travel-card-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .travel-card:hover .travel-card-img img {
-            transform: scale(1.05);
-        }
-
-        .img-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: rgba(255, 255, 255, 0.2);
-            text-align: center;
-            padding: 0 1rem;
-        }
-
-        .img-placeholder svg { width: 32px; height: 32px; }
-        .img-placeholder span { font-size: 0.75rem; font-family: var(--font-mono); }
-
-        .distance-badge {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            background: rgba(7, 11, 20, 0.75);
-            backdrop-filter: blur(6px);
-            border-radius: 100px;
-            padding: 0.25rem 0.75rem;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
             color: var(--white);
-            z-index: 2;
         }
 
-        .card-body { padding: 1.25rem 1.5rem; }
+        .icon-circle svg { width: 24px; height: 24px; }
 
-        .card-body h3 {
+        .hotels-icon { background: linear-gradient(135deg, #0B2545, #1a3a5c); }
+        .food-icon { background: linear-gradient(135deg, #7f1d1d, #b91c1c); }
+        .places-icon { background: linear-gradient(135deg, #14532d, #15803d); }
+
+        .card-content h3 {
             font-family: var(--font-heading);
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
             font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.3rem;
         }
 
-        .type-badge {
-            display: inline-block;
+        .dark-section .card-content h3 { color: var(--white); }
+
+        .directory-card .type-badge {
+            display: inline-flex;
             background: var(--light-bg);
             font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--accent);
-            padding: 0.25rem 0.75rem;
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            padding: 0.2rem 0.6rem;
             border-radius: 100px;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
         }
 
-        /* Dark Section Styles */
+        .dark-section .directory-card .type-badge {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .map-link {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent);
+            white-space: nowrap;
+            transition: var(--transition-fast);
+        }
+
+        .map-link i { width: 14px; height: 14px; }
+        
+        .arrow-icon {
+            transform: translateX(-10px);
+            opacity: 0;
+            transition: var(--transition-fast);
+            width: 14px !important;
+            height: 14px !important;
+        }
+
+        .directory-card:hover .arrow-icon {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        /* Dark Section Styles - Directory */
         .dark-section {
-            background: var(--bg-dark);
+            background-color: var(--bg-dark);
             color: var(--white);
         }
 
-        .dark-section .section-title { color: var(--white); }
-        .dark-section .section-desc { color: rgba(255, 255, 255, 0.6); }
-        .dark-section .section-label { color: var(--white); }
-
-        .dark-section .travel-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+        .dark-section .section-title,
+        .dark-section .section-label { 
+            color: var(--white); 
         }
 
-        .dark-section .travel-card:hover {
-            border-color: var(--accent);
+        .dark-section .section-desc { 
+            color: rgba(255, 255, 255, 0.6); 
+        }
+
+        .dark-section .directory-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.07);
+        }
+
+        .dark-section .directory-card:hover {
             background: rgba(255, 90, 31, 0.05);
         }
-
-        .dark-section .travel-card h3 { color: var(--white); }
-        .dark-section .type-badge { background: rgba(255, 90, 31, 0.1); }
 
         /* Transport Cards */
         .transport-grid {
@@ -732,19 +762,25 @@
             .navbar { padding: 0.6rem 1.5rem; }
             .nav-links { display: none; }
             .grid-menu-btn { display: flex; }
-            .travel-grid { grid-template-columns: repeat(3, 1fr); }
             .footer-grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
         }
 
         @media (max-width: 768px) {
-            .travel-grid { grid-template-columns: repeat(2, 1fr); }
+            .travel-grid { grid-template-columns: 1fr; }
             .transport-grid { grid-template-columns: 1fr; }
             .map-wrapper iframe { height: 300px; }
             .footer-grid { grid-template-columns: 1fr; }
         }
 
+        @media (max-width: 600px) {
+            .directory-card { padding: 1.25rem; grid-template-columns: 44px 1fr auto; }
+            .icon-circle { width: 44px; height: 44px; border-radius: 12px; }
+            .icon-circle svg { width: 20px; height: 20px; }
+            .map-link span { display: none; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        }
+
         @media (max-width: 480px) {
-            .travel-grid { grid-template-columns: 1fr; }
             .hero-meta { flex-direction: column; align-items: center; gap: 1rem; }
             .hero-meta div { width: 100%; justify-content: center; }
             .map-wrapper iframe { height: 220px; }
@@ -827,447 +863,467 @@
         <!-- Hotels Section -->
         <section id="stay" class="section" style="background: var(--light-bg);">
             <div class="container">
-                <span class="section-label reveal">Stay</span>
-                <h2 class="section-title reveal">Hotels Near IIT(ISM) Dhanbad</h2>
+                <div class="section-header reveal">
+                    <div>
+                        <span class="section-label">Stay</span>
+                        <h2 class="section-title">Hotels Near IIT(ISM) Dhanbad</h2>
+                    </div>
+                    <div class="count-badge">14 Hotels</div>
+                </div>
                 <p class="section-desc reveal">The following hotels are located near the IIT(ISM) campus and are recommended for conference delegates.</p>
 
                 <div class="travel-grid reveal">
                     <!-- Hotel 1 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Kings Resort</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/Td8AynSPDb8bfzPdA" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Kings Resort</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 2 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>The Mystique Garden (TMG)</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 2 -->
+                    <a href="https://maps.app.goo.gl/FNdPPhf2d4YeBVo38" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>The Mystique Garden (TMG)</h3>
                             <span class="type-badge">Resort</span>
                         </div>
-                    </div>
-                    <!-- Hotel 3 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Clarks Inn Suites</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 3 -->
+                    <a href="https://maps.app.goo.gl/S2aH9ryNLxckiCrB6" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Clarks Inn Suites</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 4 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Wedlock Greens Hotels & Resorts</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 4 -->
+                    <a href="https://maps.app.goo.gl/EtrDm78VJE5RktyLA" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Wedlock Greens Hotels & Resorts</h3>
                             <span class="type-badge">Resort</span>
                         </div>
-                    </div>
-                    <!-- Hotel 5 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Hotel S G International</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 5 -->
+                    <a href="https://maps.app.goo.gl/uGeAT97UHAtsAHZZ6" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Hotel S G International</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 6 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Seventeen Degrees Hotel</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 6 -->
+                    <a href="https://maps.app.goo.gl/BhfGAEjdzq6vsgh57" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Seventeen Degrees Hotel</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 7 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>The Wedding Bells</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 7 -->
+                    <a href="https://maps.app.goo.gl/Ydbrbn3hm7vKbxxk7" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>The Wedding Bells</h3>
                             <span class="type-badge">Banquet & Stay</span>
                         </div>
-                    </div>
-                    <!-- Hotel 8 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Hiway-Inn</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 8 -->
+                    <a href="https://maps.app.goo.gl/LLiQ3NKE4MUHmC4T8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Hiway-Inn</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 9 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Cocoon Hotel</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 9 -->
+                    <a href="https://maps.app.goo.gl/DDqRLTkGayhyGSgd7" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Cocoon Hotel</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 10 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Gulmohar Marriage Garden</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 10 -->
+                    <a href="https://maps.app.goo.gl/TadGCSZ23Now7tAw5" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Gulmohar Marriage Garden</h3>
                             <span class="type-badge">Resort</span>
                         </div>
-                    </div>
-                    <!-- Hotel 11 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Sonotel Hotels & Resorts</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 11 -->
+                    <a href="https://maps.app.goo.gl/7VLTf16TaTRP92ce6" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Sonotel Hotels & Resorts</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 12 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>The Nirvana Resort</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 12 -->
+                    <a href="https://maps.app.goo.gl/i6dzHYKB5M95VCbt8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>The Nirvana Resort</h3>
                             <span class="type-badge">Resort</span>
                         </div>
-                    </div>
-                    <!-- Hotel 13 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>SB International Hotel & Banquet</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 13 -->
+                    <a href="https://maps.app.goo.gl/XrCZSm56CFKFBKds7" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>SB International Hotel & Banquet</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
-                    <!-- Hotel 14 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="building"></i>
-                                <span>Luxus Inn</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Hotel 14 -->
+                    <a href="https://maps.app.goo.gl/RzyhwFmtqVArUet57" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle hotels-icon"><i data-lucide="building-2"></i></div>
+                        <div class="card-content">
                             <h3>Luxus Inn</h3>
                             <span class="type-badge">Hotel</span>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Food Section -->
-        <section id="campus" class="section dark-section">
+        <section id="campus" class="section dark-section" style="background: #070B14;">
             <div class="container">
-                <span class="section-label reveal">On Campus</span>
-                <h2 class="section-title reveal">Food Joints Inside Campus</h2>
+                <div class="section-header reveal">
+                    <div>
+                        <span class="section-label">On Campus</span>
+                        <h2 class="section-title">Food Joints Inside Campus</h2>
+                    </div>
+                    <div class="count-badge">8 Venues</div>
+                </div>
                 <p class="section-desc reveal">A variety of dining options are available within the IIT(ISM) campus for registered participants.</p>
 
                 <div class="travel-grid reveal">
                     <!-- Food 1 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Mezbaan</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/QngM5XRoBTGc5aKh8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Mezbaan</h3>
                             <span class="type-badge">Restaurant</span>
                         </div>
-                    </div>
-                    <!-- Food 2 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Domino's</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 2 -->
+                    <a href="https://maps.app.goo.gl/c4RdW3oPiPhrUaoZ8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Domino's</h3>
                             <span class="type-badge">Fast Food</span>
                         </div>
-                    </div>
-                    <!-- Food 3 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Frespresso</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 3 -->
+                    <a href="https://maps.app.goo.gl/k7GbsKGspmxYhqQc9" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Frespresso</h3>
                             <span class="type-badge">Café</span>
                         </div>
-                    </div>
-                    <!-- Food 4 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Mini Mart</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 4 -->
+                    <a href="https://maps.app.goo.gl/wjC5m45uei8mEM2VA" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Mini Mart</h3>
                             <span class="type-badge">Convenience Store</span>
                         </div>
-                    </div>
-                    <!-- Food 5 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Barista</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 5 -->
+                    <a href="https://maps.app.goo.gl/tfR1rfWgsKZ46Jeu8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Barista</h3>
                             <span class="type-badge">Café</span>
                         </div>
-                    </div>
-                    <!-- Food 6 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>KFC</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 6 -->
+                    <a href="https://maps.app.goo.gl/JurESC8BYx3DRZHVA" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>KFC</h3>
                             <span class="type-badge">Fast Food</span>
                         </div>
-                    </div>
-                    <!-- Food 7 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>Main Canteen</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 7 -->
+                    <a href="https://maps.app.goo.gl/KqYtZbiF5ytVVkZy9" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>Main Canteen</h3>
                             <span class="type-badge">Canteen</span>
                         </div>
-                    </div>
-                    <!-- Food 8 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <div class="img-placeholder">
-                                <i data-lucide="utensils"></i>
-                                <span>RD Tea Shop</span>
-                            </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                        <div class="card-body">
+                    </a>
+                    <!-- Food 8 -->
+                    <a href="https://maps.app.goo.gl/eLBdU8T97wv8mT1F8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle food-icon"><i data-lucide="utensils"></i></div>
+                        <div class="card-content">
                             <h3>RD Tea Shop</h3>
                             <span class="type-badge">Tea Stall</span>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Places Section -->
-        <section id="explore" class="section">
+        <section id="explore" class="section" style="background: var(--light-bg);">
             <div class="container">
-                <span class="section-label reveal">Explore</span>
-                <h2 class="section-title reveal">Places to Visit Near Dhanbad</h2>
+                <div class="section-header reveal">
+                    <div>
+                        <span class="section-label">Explore</span>
+                        <h2 class="section-title">Places to Visit Near Dhanbad</h2>
+                    </div>
+                    <div class="count-badge">9 Places</div>
+                </div>
                 <p class="section-desc reveal">Take time to explore the natural and cultural attractions around Dhanbad during your visit.</p>
 
                 <div class="travel-grid reveal">
                     <!-- Place 1 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~45 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Maithon Dam</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/eVzdG5khqAUxUgfj7" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Maithon Dam</h3>
-                            <span class="type-badge">Natural Site</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Natural Site</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~45 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 2 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~8 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Birsa Munda Park</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/oq9yopvmZtjXHt8h6" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Birsa Munda Park</h3>
-                            <span class="type-badge">Park</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Park</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~8 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 3 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~15 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Chitahi Dham</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/VqvKRu7qNg5NKFtE8" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Chitahi Dham</h3>
-                            <span class="type-badge">Religious Site</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Religious Site</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~15 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 4 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~20 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Lilori Dham</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/uNLcxe7kRZTnnT5D6" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Lilori Dham</h3>
-                            <span class="type-badge">Religious Site</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Religious Site</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~20 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 5 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~10 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Chasnala Kalyanshwari Mandir</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/vM69W75rYVe9vpD38" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Chasnala Kalyanshwari Mandir</h3>
-                            <span class="type-badge">Temple</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Temple</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~10 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 6 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~35 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Panchet Dam</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/ZBx8ughHrTqMr7nAA" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Panchet Dam</h3>
-                            <span class="type-badge">Natural Site</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Natural Site</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~35 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 7 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~25 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Bhatinda Fall</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/miSANeQqQbyxyhT68" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Bhatinda Fall</h3>
-                            <span class="type-badge">Waterfall</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Waterfall</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~25 km from campus
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                     <!-- Place 8 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~40 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Topchanchi Lake</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                    <a href="https://maps.app.goo.gl/ypLM53cLoLuXYaB77" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
                             <h3>Topchanchi Lake</h3>
-                            <span class="type-badge">Natural Site</span>
-                        </div>
-                    </div>
-                    <!-- Place 9 -->
-                    <div class="travel-card">
-                        <div class="travel-card-img">
-                            <span class="distance-badge">~12 km</span>
-                            <div class="img-placeholder">
-                                <i data-lucide="mountain"></i>
-                                <span>Shakti Mandir</span>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Natural Site</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~40 km from campus
+                                </span>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <h3>Shakti Mandir</h3>
-                            <span class="type-badge">Temple</span>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
                         </div>
-                    </div>
+                    </a>
+                    <!-- Place 9 -->
+                    <a href="https://maps.app.goo.gl/55UHMaVU5LD5x63B7" target="_blank" rel="noopener" class="directory-card">
+                        <div class="icon-circle places-icon"><i data-lucide="mountain"></i></div>
+                        <div class="card-content">
+                            <h3>Shakti Mandir</h3>
+                            <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                <span class="type-badge">Temple</span>
+                                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-muted); display: flex; align-items: center; gap: 4px;">
+                                    <i data-lucide="navigation" style="width:11px;"></i> ~12 km from campus
+                                </span>
+                            </div>
+                        </div>
+                        <div class="map-link">
+                            <i data-lucide="map-pin"></i><span>View Map</span>
+                            <i data-lucide="arrow-right" class="arrow-icon"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
