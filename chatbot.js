@@ -97,13 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             <div class="chat-messages" id="chat-messages"></div>
 
-            <div class="chat-chips" id="chat-chips">
-                <div class="chip">📅 Important Dates</div>
-                <div class="chip">💰 Registration Fees</div>
-                <div class="chip">🏨 Hotels Nearby</div>
-                <div class="chip">📄 Submission Guide</div>
-                <div class="chip">📍 How to Reach</div>
-            </div>
+            <div class="chat-chips" id="chat-chips"></div>
 
             <div class="chat-input-row">
                 <textarea id="chat-input" placeholder="Ask anything about IC ADIB-26..." rows="1"></textarea>
@@ -127,16 +121,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     const messagesContainer = document.getElementById('chat-messages');
     const chipsContainer = document.getElementById('chat-chips');
 
+    const PAGE_CONTEXTS = {
+        'index.html': {
+            greeting: "Welcome to the official portal for IC ADIB-26! I'm Sakshi, and I'd love to help you explore our conference tracks and key dates.",
+            chips: ["📅 Key Dates", "📚 Research Tracks", "💰 Registration", "🏫 Venue Info"]
+        },
+        'register.html': {
+            greeting: "Ready to join us at IC ADIB-26? I'm Sakshi—I can help you with the registration process, fee structure, or early bird discounts!",
+            chips: ["💰 Fee Structure", "⏰ Early Bird Info", "📝 How to Register", "💳 Payment Help"]
+        },
+        'travel.html': {
+            greeting: "Planning your trip to IIT(ISM) Dhanbad? I'm Sakshi, your travel companion! I can guide you on the best ways to reach us and where to stay.",
+            chips: ["📍 How to Reach", "🏨 Nearby Hotels", "🚆 Train Info", "✈️ Nearest Airport"]
+        },
+        'default': {
+            greeting: "👋 Hi! I'm Sakshi, I'm here to help you with everything about the IC ADIB-26 conference.",
+            chips: ["📅 Important Dates", "💰 Registration Fees", "📚 Tracks", "📍 Location"]
+        }
+    };
+
+    function getPageContext() {
+        const path = window.location.pathname;
+        const page = path.split("/").pop() || 'index.html';
+        return PAGE_CONTEXTS[page] || PAGE_CONTEXTS['default'];
+    }
+
     // Toggle Chat
     trigger.addEventListener('click', () => {
         windowEl.classList.add('active');
         if (!isWelcomeShown) {
+            const context = getPageContext();
             setTimeout(() => {
-                showBotMessage("👋 Hi! I'm Sakshi, I'm here to help you with everything about the IC ADIB-26 conference.");
+                showBotMessage(context.greeting);
                 setTimeout(() => {
                     showBotMessage("Before we start, may I know your name?");
                     awaitingName = true;
-                }, 1000);
+                }, 1200);
             }, 800);
             isWelcomeShown = true;
         }
@@ -145,6 +165,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     closeBtn.addEventListener('click', () => {
         windowEl.classList.remove('active');
     });
+
+    // Suggestion Chips System
+    function renderSuggestions(chips) {
+        chipsContainer.innerHTML = '';
+        if (!chips || chips.length === 0) {
+            chipsContainer.style.display = 'none';
+            return;
+        }
+        
+        chipsContainer.style.display = 'flex';
+        chips.forEach(text => {
+            const chip = document.createElement('div');
+            chip.className = 'chip';
+            chip.innerText = text;
+            chip.addEventListener('click', () => {
+                input.value = text.replace(/^[^\w]+/, '').trim();
+                input.dispatchEvent(new Event('input'));
+                handleSend();
+            });
+            chipsContainer.appendChild(chip);
+        });
+        scrollToBottom();
+    }
 
     // Auto-resize textarea
     input.addEventListener('input', () => {
@@ -162,14 +205,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.value = '';
         input.style.height = 'auto';
         sendBtn.disabled = true;
-        chipsContainer.style.display = 'none';
+        renderSuggestions([]); // Clear chips on send
 
         // Check if we are awaiting name
         if (awaitingName) {
             userName = text;
             awaitingName = false;
             setTimeout(() => {
+                const context = getPageContext();
                 showBotMessage(`It's so nice to meet you, ${userName}! How can I help you today?`);
+                setTimeout(() => {
+                    renderSuggestions(context.chips);
+                }, 800);
             }, 800);
             return;
         }
@@ -186,6 +233,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => {
                 removeTypingIndicator();
                 showBotMessage(response);
+                
+                // Show contextual chips after bot reply if relevant
+                if (response.toLowerCase().includes('venue') || response.toLowerCase().includes('reach')) {
+                    renderSuggestions(["📍 Open in Maps", "🏨 Accommodation", "🚆 Travel Info"]);
+                } else if (response.toLowerCase().includes('date') || response.toLowerCase().includes('timeline')) {
+                    renderSuggestions(["💰 Registration Fees", "📄 Submission Guide", "📚 Tracks"]);
+                } else {
+                    renderSuggestions(getPageContext().chips);
+                }
             }, typingTime);
         }, 400);
     };
@@ -196,15 +252,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.preventDefault();
             handleSend();
         }
-    });
-
-    // Quick Reply Chips
-    document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            input.value = chip.innerText.replace(/^[^\w]+/, '').trim();
-            input.dispatchEvent(new Event('input'));
-            handleSend();
-        });
     });
 
     // Helper: Add User Bubble
@@ -226,15 +273,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         const row = document.createElement('div');
         row.style.display = 'flex';
         row.style.flexDirection = 'column';
+        row.className = 'bot-msg-container';
+        
+        // Dynamic Rich Card Detection
+        let richCardHtml = '';
+        if (text.toLowerCase().includes('iit(ism) dhanbad') || text.toLowerCase().includes('venue')) {
+            richCardHtml = `
+                <div class="rich-card">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=400" alt="IIT Dhanbad" class="card-img">
+                    <div class="card-content">
+                        <h3>IIT (ISM) Dhanbad</h3>
+                        <p>Dhanbad, Jharkhand - 826004</p>
+                        <a href="https://maps.app.goo.gl/3wGv2rEqp6Z6XGzY7" target="_blank" class="card-link">
+                            <i data-lucide="map-pin"></i> Open in Maps
+                        </a>
+                    </div>
+                </div>
+            `;
+        } else if (text.toLowerCase().includes('dates') || text.toLowerCase().includes('timeline')) {
+             richCardHtml = `
+                <div class="rich-card timeline-card">
+                    <div class="card-content">
+                        <div class="timeline-item"><span>May 15</span> Abstract Submission</div>
+                        <div class="timeline-item"><span>Jul 15</span> Full Paper Due</div>
+                        <div class="timeline-item"><span>Sep 18</span> Conference Starts</div>
+                    </div>
+                </div>
+            `;
+        }
+
         row.innerHTML = `
             <div class="msg msg-bot">${text}</div>
+            ${richCardHtml}
             <div class="msg-time">${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
         `;
         messagesContainer.appendChild(row);
+        
+        if (window.lucide) window.lucide.createIcons();
+        
         scrollToBottom();
         conversationHistory.push({ role: "assistant", content: text });
         
-        // Keep history at 10 turns (20 msgs) max
         if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
     }
 
