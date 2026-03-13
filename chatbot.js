@@ -1,11 +1,10 @@
 let DEEPSEEK_API_KEY = null;
-let protocolError = false;
+let configError = null;
 
 async function loadConfig() {
     try {
-        // Detect if running via file:// protocol which blocks fetch
         if (window.location.protocol === 'file:') {
-            protocolError = true;
+            configError = "protocol";
             console.warn('ADIB Assistant: Running via file:// protocol. Fetching .env is blocked by browser security.');
             return;
         }
@@ -27,11 +26,16 @@ async function loadConfig() {
                     }
                     DEEPSEEK_API_KEY = value;
                     console.log('ADIB Assistant: API Key loaded successfully.');
-                    break;
+                    return;
                 }
             }
+            configError = "parse";
+        } else {
+            configError = `fetch_${resp.status}`;
+            console.error(`ADIB Assistant: Failed to load .env (Status: ${resp.status})`);
         }
     } catch (err) {
+        configError = "error";
         console.error('ADIB Assistant: Error loading .env:', err);
     }
 }
@@ -302,11 +306,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // API Integration
     async function getBotResponse() {
-        if (protocolError) {
-            return "⚠️ **Security Restriction:** You opened this file directly. Browsers block the chatbot from reading the `.env` file locally for security. Please use a **Local Server** (like VS Code Live Server) to fix this.";
-        }
         if (!DEEPSEEK_API_KEY) {
-            return "❌ **Configuration Error:** API Key not found in `.env`. Please ensure your key is added after `DEEPSEEK_API_KEY=` in your `.env` file.";
+            if (configError === "protocol") {
+                return "⚠️ **Security Restriction:** Browsers block reading local files when opened directly. Please use a **Local Server** (like Live Server).";
+            }
+            if (configError && configError.startsWith('fetch_')) {
+                const status = configError.split('_')[1];
+                return `❌ **Server Error (${status}):** Your local server is blocking the \`.env\` file. Try renaming it to \`env.txt\` and update the code, or check your server settings.`;
+            }
+            if (configError === "parse") {
+                return "❌ **Parsing Error:** Found \`.env\` but couldn't find \`DEEPSEEK_API_KEY=\` inside it. Check the file content.";
+            }
+            return "❌ **Configuration Error:** API Key not found. Please ensure your \`.env\` file exists and contains \`DEEPSEEK_API_KEY=your_key\`.";
         }
         try {
             const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
