@@ -1,11 +1,12 @@
-// API Key will be loaded from .env for local security
 let DEEPSEEK_API_KEY = null;
+let protocolError = false;
 
 async function loadConfig() {
     try {
         // Detect if running via file:// protocol which blocks fetch
         if (window.location.protocol === 'file:') {
-            console.warn('ADIB Assistant: Running via file:// protocol. Fetching .env is blocked by browser security. Please use a local server (e.g., Live Server) or hardcode the key for local testing.');
+            protocolError = true;
+            console.warn('ADIB Assistant: Running via file:// protocol. Fetching .env is blocked by browser security.');
             return;
         }
 
@@ -20,7 +21,6 @@ async function loadConfig() {
                 const match = line.match(/^DEEPSEEK_API_KEY\s*=\s*(.*)$/);
                 if (match) {
                     let value = match[1].trim();
-                    // Remove wrapping quotes if present
                     if ((value.startsWith('"') && value.endsWith('"')) || 
                         (value.startsWith("'") && value.endsWith("'"))) {
                         value = value.substring(1, value.length - 1);
@@ -302,9 +302,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // API Integration
     async function getBotResponse() {
+        if (protocolError) {
+            return "⚠️ **Security Restriction:** You opened this file directly. Browsers block the chatbot from reading the `.env` file locally for security. Please use a **Local Server** (like VS Code Live Server) to fix this.";
+        }
         if (!DEEPSEEK_API_KEY) {
-            console.error('ADIB Assistant: No API Key found.');
-            return "I'm sorry, my API Key is not configured correctly in the .env file. Please ensure it's set up.";
+            return "❌ **Configuration Error:** API Key not found in `.env`. Please ensure your key is added after `DEEPSEEK_API_KEY=` in your `.env` file.";
         }
         try {
             const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
