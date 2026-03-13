@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADIB Assistant — Chatbot Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #070B14;
+            --primary: #0B1F3A;
+            --accent: #FF5A1F;
+            --white: #ffffff;
+            --light-bg: #F4F7FA;
+            --border: #E2E8F0;
+            --text-dark: #0B1F3A;
+            --text-muted: #64748B;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14);
+            --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        /* ── DEMO PAGE ── */
+        .demo-hero {
+            text-align: center;
+            max-width: 560px;
+        }
+
+        .demo-label {
+            display: inline-block;
+            background: #fff3ed;
+            color: var(--accent);
+            border: 1px solid #ffd4be;
+            border-radius: 100px;
+            padding: 0.3rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .demo-hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .demo-hero p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ── API KEY SETUP CARD ── */
+        .setup-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.75rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .setup-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 0.35rem;
+        }
+
+        .setup-card .sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        .setup-card .sub a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .setup-card input {
+            flex: 1;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 0.65rem 1rem;
+            font-size: 0.82rem;
+            font-family: var(--font-mono);
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--light-bg);
+        }
+
+        .setup-card input:focus {
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .setup-card button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.65rem 1.25rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: var(--font-body);
+            white-space: nowrap;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        .setup-card button:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.85rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #CBD5E1;
+            transition: background 0.4s;
+            flex-shrink: 0;
+        }
+
+        .dot.green {
+            background: #22c55e;
+        }
+
+        .dot.orange {
+            background: var(--accent);
+            animation: pulse-dot 1s ease infinite;
+        }
+
+        .dot.red {
+            background: #ef4444;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ── INFO GRID ── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .info-pill {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+        }
+
+        .info-pill strong {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 0.15rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+
+        /* ════════════════════════════════════
+   CHATBOT WIDGET
+════════════════════════════════════ */
+
+        /* Trigger */
+        .chat-fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 28px rgba(255, 90, 31, 0.45);
+            z-index: 9999;
+            transition: transform 0.25s var(--ease-spring),
+                box-shadow 0.25s ease;
+        }
+
+        .chat-fab:hover {
+            transform: scale(1.12);
+            box-shadow: 0 14px 36px rgba(255, 90, 31, 0.55);
+        }
+
+        .chat-fab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 90, 31, 0.45);
+            animation: fab-ping 2.5s ease-out infinite;
+        }
+
+        @keyframes fab-ping {
+            0% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        .chat-fab svg {
+            color: white;
+            transition: transform 0.3s var(--ease-spring);
+        }
+
+        .chat-fab.open svg {
+            transform: rotate(90deg);
+        }
+
+        .fab-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 18px;
+            height: 18px;
+            background: #22c55e;
+            border-radius: 50%;
+            border: 2px solid var(--light-bg);
+            font-size: 0.6rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            transition: opacity 0.3s;
+        }
+
+        .fab-badge.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .fab-tooltip {
+            position: absolute;
+            right: calc(100% + 0.75rem);
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-dark);
+            color: white;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            padding: 0.4rem 0.85rem;
+            border-radius: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .fab-tooltip::after {
+            content: '';
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-left-color: var(--bg-dark);
+        }
+
+        .chat-fab:hover .fab-tooltip {
+            opacity: 1;
+        }
+
+        /* Window */
+        .chat-window {
+            position: fixed;
+            bottom: 5.5rem;
+            right: 2rem;
+            width: 390px;
+            height: 560px;
+            background: white;
+            border-radius: 22px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            display: flex;
+            flex-direction: column;
+            z-index: 9998;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transform: scale(0.82) translateY(12px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.35s var(--ease-spring),
+                opacity 0.25s ease;
+        }
+
+        .chat-window.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Header */
+        .chat-header {
+            background: var(--bg-dark);
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8c5a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            color: white;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .chat-header-text {
+            flex: 1;
+        }
+
+        .chat-header-name {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            color: white;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .chat-header-status {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.15rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        .chat-close-btn {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .chat-close-btn:hover {
+            background: rgba(255, 90, 31, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            scroll-behavior: smooth;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        /* Message rows */
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 0.5rem;
+            animation: msg-in 0.3s var(--ease-spring) both;
+        }
+
+        .msg-row.user {
+            flex-direction: row-reverse;
+        }
+
+        @keyframes msg-in {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .msg-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), #ff8c5a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-family: var(--font-heading);
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .msg-bubble {
+            max-width: 80%;
+            padding: 0.7rem 1rem;
+            border-radius: 16px;
+            font-size: 0.86rem;
+            line-height: 1.65;
+            font-family: var(--font-body);
+        }
+
+        .msg-row.bot .msg-bubble {
+            background: var(--light-bg);
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+            border-radius: 16px 16px 16px 4px;
+        }
+
+        .msg-row.user .msg-bubble {
+            background: var(--accent);
+            color: white;
+            border-radius: 16px 16px 4px 16px;
+        }
+
+        /* Bot message markdown-like formatting */
+        .msg-bubble ul {
+            padding-left: 1.2rem;
+            margin-top: 0.4rem;
+        }
+
+        .msg-bubble ul li {
+            margin-bottom: 0.2rem;
+        }
+
+        .msg-bubble strong {
+            font-weight: 700;
+        }
+
+        .msg-bubble p+p {
+            margin-top: 0.5rem;
+        }
+
+        .msg-time {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            margin-top: 0.25rem;
+            padding: 0 0.5rem;
+        }
+
+        .msg-row.user .msg-time {
+            text-align: right;
+        }
+
+        /* Typing indicator */
+        .typing-bubble {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 0.75rem 1rem;
+            background: var(--light-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px 16px 16px 4px;
+            width: fit-content;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing-bounce 1.2s ease infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes typing-bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Quick chips */
+        .quick-chips {
+            padding: 0 1.25rem 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .chip {
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 100px;
+            padding: 0.35rem 0.9rem;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+            white-space: nowrap;
+        }
+
+        .chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #fff3ed;
+            transform: translateY(-1px);
+        }
+
+        /* Input area */
+        .chat-input-area {
+            border-top: 1px solid var(--border);
+            padding: 0.85rem 1rem;
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-end;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .chat-input-area textarea {
+            flex: 1;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 0.6rem 0.85rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            resize: none;
+            min-height: 40px;
+            max-height: 100px;
+            outline: none;
+            transition: border-color 0.2s;
+            line-height: 1.5;
+            background: var(--light-bg);
+        }
+
+        .chat-input-area textarea:focus {
+            border-color: var(--accent);
+            background: white;
+        }
+
+        .chat-input-area textarea::placeholder {
+            color: #B0BAC8;
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: opacity 0.2s, transform 0.15s var(--ease-spring);
+            box-shadow: 0 4px 12px rgba(255, 90, 31, 0.3);
+        }
+
+        .send-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        .send-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .send-btn svg {
+            color: white;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .chat-window {
+                width: 92vw;
+                height: 75vh;
+                bottom: 5rem;
+                right: 4vw;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── PAGE DEMO CONTENT ── -->
+    <div class="demo-hero">
+        <div class="demo-label">🤖 Chatbot Demo</div>
+        <h1>ADIB Assistant</h1>
+        <p>This is a demo test page for the IC ADIB-26 conference chatbot. Enter your DeepSeek API key below to activate
+            the assistant, then click the orange button in the bottom-right corner.</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-pill"><strong>deepseek-chat</strong>Model</div>
+        <div class="info-pill"><strong>Context</strong>Stuffing</div>
+        <div class="info-pill"><strong>Zero</strong>Hallucination</div>
+    </div>
+
+    <!-- ── API KEY SETUP ── -->
+    <div class="setup-card">
+        <h3>Enter your DeepSeek API Key</h3>
+        <div class="sub">Get your free key at <a href="https://platform.deepseek.com"
+                target="_blank">platform.deepseek.com</a></div>
+        <div class="input-row">
+            <input type="password" id="apiKeyInput" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx" />
+            <button onclick="saveKey()">Activate</button>
+        </div>
+        <div class="status-row">
+            <div class="dot" id="statusDot"></div>
+            <span id="statusText">No API key entered</span>
+        </div>
+    </div>
+
+    <!-- ── CHATBOT FAB ── -->
+    <button class="chat-fab" id="chatFab" onclick="toggleChat()">
+        <div class="fab-badge" id="fabBadge">1</div>
+        <span class="fab-tooltip">Ask about IC ADIB-26</span>
+        <i data-lucide="message-circle" style="width:24px;height:24px;"></i>
+    </button>
+
+    <!-- ── CHAT WINDOW ── -->
+    <div class="chat-window" id="chatWindow">
+
+        <div class="chat-header">
+            <div class="chat-avatar">A</div>
+            <div class="chat-header-text">
+                <div class="chat-header-name">ADIB Assistant</div>
+                <div class="chat-header-status">
+                    <div class="online-dot"></div>
+                    Online · Powered by DeepSeek
+                </div>
+            </div>
+            <button class="chat-close-btn" onclick="toggleChat()">
+                <i data-lucide="x" style="width:16px;height:16px;"></i>
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <div class="quick-chips" id="quickChips">
+            <div class="chip" onclick="sendChip(this)">📅 Important Dates</div>
+            <div class="chip" onclick="sendChip(this)">💰 Registration Fees</div>
+            <div class="chip" onclick="sendChip(this)">🏨 Hotels Nearby</div>
+            <div class="chip" onclick="sendChip(this)">📄 Submission Guidelines</div>
+            <div class="chip" onclick="sendChip(this)">📍 How to Reach</div>
+            <div class="chip" onclick="sendChip(this)">🍽️ Food on Campus</div>
+            <div class="chip" onclick="sendChip(this)">💳 Payment Details</div>
+        </div>
+
+        <div class="chat-input-area">
+            <textarea id="chatInput" placeholder="Ask anything about IC ADIB-26..." rows="1"
+                onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>
+                <i data-lucide="send" style="width:16px;height:16px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        /* ════════════════════════════════════
+           FULL CONFERENCE KNOWLEDGE BASE
+           (sourced 100% from official documents)
+        ════════════════════════════════════ */
+        const SYSTEM_PROMPT = `You are ADIB Assistant — the official AI assistant for IC ADIB-26 (International Conference on Advances in Sustainable Development, Innovation and Business) hosted by IIT(ISM) Dhanbad.
+
+STRICT RULES:
+1. Answer ONLY using the information provided below. Do NOT make up any information.
+2. If something is not in the knowledge base, say: "I don't have that information. Please email icadib26@iitism.ac.in for help."
+3. Keep responses concise (3–5 sentences max). Use bullet points only when listing multiple items.
+4. Be warm, professional, and helpful.
+5. When asked about fees, ALWAYS mention the GST note.
+6. Never guess dates, prices, names, or links — only use what's below.
+
+═══════════════════════════════════════
+SECTION 1: BASIC CONFERENCE DETAILS
+═══════════════════════════════════════
+Full Name: International Conference on Advances in Sustainable Development, Innovation and Business
+Short Name: IC ADIB-26
+Main Conference Dates: 18th–19th September 2026
+Pre-Conference Workshop: 17th September 2026
+Mode: Hybrid (both online and in-person)
+Venue: IIT(ISM) Dhanbad, Jharkhand 826004, India
+Organised By: Department of Management Studies & Industrial Engineering (DMS&IE), IIT(ISM) Dhanbad
+Contact Email: icadib26@iitism.ac.in
+
+═══════════════════════════════════════
+SECTION 2: ABOUT THE CONFERENCE
+═══════════════════════════════════════
+IC ADIB-26 aims to provide a global platform for academicians, researchers, industry professionals, policymakers, and doctoral scholars to deliberate on the evolving role of sustainability in a digitally transformed world.
+The conference explores innovative management practices that balance economic performance with social responsibility and environmental stewardship, covering topics like AI, analytics, automation, and Industry 5.0.
+
+═══════════════════════════════════════
+SECTION 3: ABOUT IIT(ISM) DHANBAD
+═══════════════════════════════════════
+Established in 1926, IIT(ISM) Dhanbad is one of India's premier institutions for teaching, research, and innovation. Originally focused on mining, it has evolved into a comprehensive technological university. In 2026, IIT(ISM) Dhanbad celebrates its centenary (100 years).
+
+═══════════════════════════════════════
+SECTION 4: IMPORTANT DATES (ALL TENTATIVE)
+═══════════════════════════════════════
+- Abstract Submission Deadline: 15th May 2026
+- Notification of Abstract Acceptance: 15th June 2026
+- Full Paper Submission Deadline: 15th July 2026
+- Notification of Full Paper Acceptance: 30th July 2026
+- Early Bird Registration Deadline: 15th August 2026
+- Pre-Conference Seminar: 17th September 2026
+- Main Conference: 18th–19th September 2026
+Note: All dates are tentative and subject to change.
+
+═══════════════════════════════════════
+SECTION 5: CONFERENCE TRACKS (10 TOTAL)
+═══════════════════════════════════════
+Track 1: Sustainable Strategy and Corporate Governance
+Track 2: AI, Analytics, and Digital Transformation
+Track 3: Sustainability, ESG, and Responsible Management
+Track 4: Human Resource Management and Future of Work
+Track 5: Marketing, Consumer Analytics, and Sustainable Value Creation
+Track 6: Operations, Supply Chain, and Industry 5.0
+Track 7: Finance, Accounting, and FinTech for Sustainability
+Track 8: Innovation, Entrepreneurship, and Startups
+Track 9: Public Policy, Governance, and Smart Cities
+Track 10: Global Business, Ethics, and Cross-Cultural Management
+
+═══════════════════════════════════════
+SECTION 6: REGISTRATION FEES
+═══════════════════════════════════════
+All fees are EXCLUSIVE of 18% GST (GST will be added on top).
+
+| Category | Early Bird (before 15 Aug 2026) | Regular |
+|---|---|---|
+| Research Scholars / Students | INR 4,500 | INR 5,500 |
+| Faculty Members | INR 6,000 | INR 8,000 |
+| Industry Participants | INR 10,000 | INR 12,000 |
+| International Participants | USD 200 | USD 250 |
+| International (Video Conference Only) | USD 150 | USD 200 |
+| Delegates / Accompanying Persons | INR 6,000 | INR 6,000 |
+
+Special Note: Scholars/Students who ONLY want to attend the pre-conference workshop (without full conference) pay INR 2,500 + 18% GST.
+Pre-conference is FREE for all registered full conference participants.
+Accommodation on campus may be arranged (sharing/single occupancy) at the Institute's Guest House / Hostels subject to availability, on payment basis.
+
+═══════════════════════════════════════
+SECTION 7: PAYMENT DETAILS
+═══════════════════════════════════════
+Account Name: IIT ISM CEP ACCOUNT
+Account Number: 110261358281
+Bank: Canara Bank
+IFS Code: CNRB0000986
+SWIFT Code: CNRBINBBBFD (for international transfers)
+UPI ID: 33367063**7358281@cnrb**
+
+After payment, email confirmation to: icadib26@iitism.ac.in
+Include: your name, institute, and participant category.
+
+═══════════════════════════════════════
+SECTION 8: CALL FOR PAPERS & SUBMISSION
+═══════════════════════════════════════
+Who can submit: Academicians, students, industry professionals, policymakers, doctoral scholars.
+What to submit: Original unpublished research papers, conceptual papers, review articles, extended abstracts.
+Option: Authors who do not want to submit full paper may submit extended abstract only.
+
+Publication:
+- Full paper (if accepted): may be considered for publication in a Scopus-indexed journal.
+- Extended abstract (accepted + registered): published in conference proceedings.
+
+═══════════════════════════════════════
+SECTION 9: SUBMISSION GUIDELINES (EXTENDED ABSTRACT)
+═══════════════════════════════════════
+- Maximum length: 1000 words
+- File format: Single Word document (.docx)
+- Font: Times New Roman
+- Font size: 12pt
+- Line spacing: Double-spaced
+- Margins: 1 inch (2.5 cm) on all sides
+- References style: APA Style Guide, 7th Edition
+
+Document structure order:
+1. Title of paper
+2. Author names (e.g., First Author¹, Second Author²*, Third Author³)
+   (Mark corresponding author with asterisk *)
+3. Affiliations of all authors
+4. Abstract body text
+5. References list (APA 7th edition)
+
+═══════════════════════════════════════
+SECTION 10: ORGANIZING COMMITTEE
+═══════════════════════════════════════
+Chief Patron: Prof. Prem Vrat (Chairperson, Board of Governors, IIT ISM Dhanbad)
+Patron: Prof. Sukumar Mishra (Director, IIT ISM Dhanbad)
+Co-Patron: Prof. Dheeraj Kumar (Deputy Director, IIT ISM Dhanbad)
+Chairperson: Prof. Sandeep Mondal (Head of Department, DMS&IE)
+Conference Convenor: Prof. Himanshu Gupta | Email: himanshug@iitism.ac.in
+Conference Co-Convenor: Prof. Shashank Bansal | Email: shashank@iitism.ac.in
+Organizing Secretary: Prof. Preeti Roy | Email: preetir@iitism.ac.in
+
+Internal Advisory Committee (Deans):
+- Prof. Mritunjay Kumar Singh (Dean, Academic)
+- Prof. Alok Kumar Das (Dean, Innovation, Incubation & Entrepreneurship)
+- Prof. Rajni Singh (Dean, Corporate Communications)
+- Prof. Rajeev Upadhyay (Dean, International Relations & Alumni Affairs)
+- Prof. Sarat Kumar Das (Dean, Faculty)
+- Prof. Parthasarathi Das (Dean, Research and Development)
+- Prof. Amit Rai Dixit (Dean, Infrastructure)
+- Prof. Sunil Kumar Gupta (Dean, Students Welfare)
+
+Faculty Advisory Members:
+Prof. J K Pattanayak, Prof. Mohd Irfan, Prof. G S Pathak, Prof. Shikha Singh, Prof. Saumya Singh, Prof. Aparna Krishna, Prof. K S Thyagaraj, Prof. Rashmi Singh, Prof. Niladri Das, Prof. Sabnam Basu, Prof. Krishnendu Shaw, Prof. Aamna Khan, Prof. Mrinalini Pandey, Prof. Esha Saha, Prof. Bibhas Chandra
+
+═══════════════════════════════════════
+SECTION 11: HOW TO REACH IIT(ISM) DHANBAD
+═══════════════════════════════════════
+Address: IIT(ISM) Dhanbad, Jharkhand 826004, India
+
+By Train: Dhanbad Junction (station code: DHN) is the nearest railway station, approximately 3 km from campus. Dhanbad is well-connected to Delhi, Mumbai, Kolkata, Chennai, and all major cities.
+
+By Air: The nearest airport is Birsa Munda Airport, Ranchi (IATA: IXR), approximately 180 km from Dhanbad. Taxis and buses available from Ranchi to Dhanbad (~3–4 hour drive).
+
+By Road: Dhanbad is connected via NH-2 and NH-19. Regular bus services from Kolkata (~280 km), Patna (~320 km), and nearby cities.
+
+═══════════════════════════════════════
+SECTION 12: HOTELS NEAR IIT(ISM) DHANBAD
+═══════════════════════════════════════
+(All hotels are near the IIT ISM campus. Google Maps links are available on the travel page of the website.)
+
+1. Kings Resort — Hotel
+2. The Mystique Garden (TMG) — Resort
+3. Clarks Inn Suites — Hotel
+4. Wedlock Greens Hotels & Resorts — Resort
+5. Hotel S G International — Hotel
+6. Seventeen Degrees Hotel — Hotel
+7. The Wedding Bells — Banquet & Stay
+8. Hiway-Inn — Hotel
+9. Cocoon Hotel — Hotel
+10. Gulmohar Marriage Garden — Resort
+11. Sonotel Hotels & Resorts — Hotel
+12. The Nirvana Resort — Resort
+13. SB International Hotel & Banquet — Hotel
+14. Luxus Inn — Hotel
+
+For Google Maps directions to each hotel, visit the Travel page on the conference website.
+
+═══════════════════════════════════════
+SECTION 13: FOOD INSIDE IIT(ISM) CAMPUS
+═══════════════════════════════════════
+1. Mezbaan — Restaurant
+2. Domino's — Fast Food
+3. Frespresso — Café
+4. Mini Mart — Convenience Store
+5. Barista — Café
+6. KFC — Fast Food
+7. Main Canteen — Canteen
+8. RD Tea Shop — Tea Stall
+
+═══════════════════════════════════════
+SECTION 14: PLACES TO VISIT NEAR DHANBAD
+═══════════════════════════════════════
+1. Maithon Dam — Natural Site (~45 km from campus)
+2. Birsa Munda Park — Park (~8 km from campus)
+3. Chitahi Dham — Religious Site (~15 km from campus)
+4. Lilori Dham — Religious Site (~20 km from campus)
+5. Chasnala Kalyanshwari Mandir — Temple (~10 km from campus)
+6. Panchet Dam — Natural Site (~35 km from campus)
+7. Bhatinda Fall — Waterfall (~25 km from campus)
+8. Topchanchi Lake — Natural Site (~40 km from campus)
+9. Shakti Mandir — Temple (~12 km from campus)
+
+For Google Maps links to all places, visit the Travel page on the conference website.
+
+═══════════════════════════════════════
+SECTION 15: INTENT RESOLUTION GUIDE
+═══════════════════════════════════════
+Use this to understand what the user is asking:
+
+"fee" / "cost" / "price" / "how much" / "charges" → Registration Fees (Section 6)
+"pay" / "payment" / "bank" / "account" / "upi" / "transfer" → Payment Details (Section 7)
+"deadline" / "date" / "when" / "last date" → Important Dates (Section 4)
+"submit" / "submission" / "abstract" / "paper" / "format" / "word count" → Submission Guidelines (Section 9)
+"hotel" / "stay" / "accommodation" / "where to stay" → Hotels (Section 12)
+"food" / "eat" / "canteen" / "restaurant" / "campus food" → Food (Section 13)
+"visit" / "tourist" / "places" / "sightseeing" / "explore" → Places to Visit (Section 14)
+"reach" / "travel" / "train" / "airport" / "flight" / "how to come" → How to Reach (Section 11)
+"track" / "topic" / "theme" / "research area" → Tracks (Section 5)
+"organizer" / "committee" / "contact" / "who" / "coordinator" → Organizing Committee (Section 10)
+"publication" / "journal" / "scopus" / "proceedings" → Call for Papers (Section 8)
+"early bird" → Early bird deadline is 15th August 2026 (Section 4 + 6)
+"gst" → All Indian fees are exclusive of 18% GST which will be added on top
+"pre-conference" / "workshop" → Pre-conference on 17th Sept; free for registered participants; INR 2500+GST for workshop-only attendees
+
+Always respond in English unless the user writes in another language.`;
+
+        /* ── STATE ── */
+        let apiKey = '';
+        let isOpen = false;
+        let isLoading = false;
+        let welcomeShown = false;
+        let chipsVisible = true;
+        let conversationHistory = [];
+
+        /* ── KEY MANAGEMENT ── */
+        function saveKey() {
+            const val = document.getElementById('apiKeyInput').value.trim();
+            if (!val || !val.startsWith('sk-')) {
+                setStatus('red', 'Invalid key — must start with sk-');
+                return;
+            }
+            apiKey = val;
+            setStatus('orange', 'Verifying key...');
+            testKey();
+        }
+
+        async function testKey() {
+            try {
+                const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages: [{ role: 'user', content: 'Hi' }],
+                        max_tokens: 5
+                    })
+                });
+                if (res.ok) {
+                    setStatus('green', '✓ API key verified — chatbot is ready!');
+                    document.getElementById('chatFab').style.boxShadow = '0 8px 28px rgba(255,90,31,0.45)';
+                } else {
+                    const err = await res.json();
+                    setStatus('red', `Error: ${err.error?.message || 'Invalid key'}`);
+                }
+            } catch {
+                setStatus('red', 'Network error — check your connection');
+            }
+        }
+
+        function setStatus(color, text) {
+            document.getElementById('statusDot').className = `dot ${color}`;
+            document.getElementById('statusText').textContent = text;
+        }
+
+        /* ── CHAT TOGGLE ── */
+        function toggleChat() {
+            isOpen = !isOpen;
+            document.getElementById('chatWindow').classList.toggle('open', isOpen);
+            document.getElementById('chatFab').classList.toggle('open', isOpen);
+
+            if (isOpen) {
+                document.getElementById('fabBadge').classList.add('hide');
+                if (!welcomeShown) {
+                    welcomeShown = true;
+                    setTimeout(() => {
+                        addBotMessage("👋 Hi! I'm ADIB Assistant for IC ADIB-26. I can help you with registration fees, important dates, submission guidelines, travel & accommodation, and more.\n\nWhat would you like to know?");
+                    }, 400);
+                }
+                setTimeout(() => document.getElementById('chatInput').focus(), 350);
+            }
+            lucide.createIcons();
+        }
+
+        /* ── SEND ── */
+        async function sendMessage(textOverride) {
+            if (!apiKey) {
+                alert('Please enter and activate your DeepSeek API key first.');
+                return;
+            }
+            const input = document.getElementById('chatInput');
+            const text = (textOverride || input.value).trim();
+            if (!text || isLoading) return;
+
+            // Hide chips
+            if (chipsVisible) {
+                document.getElementById('quickChips').style.display = 'none';
+                chipsVisible = false;
+            }
+
+            // Add user message
+            addUserMessage(text);
+            input.value = '';
+            autoResize(input);
+            document.getElementById('sendBtn').disabled = true;
+
+            // Add to history
+            conversationHistory.push({ role: 'user', content: text });
+            if (conversationHistory.length > 20) {
+                conversationHistory = conversationHistory.slice(-20);
+            }
+
+            // Show typing
+            const typingId = showTyping();
+            isLoading = true;
+
+            try {
+                const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat',
+                        messages: [
+                            { role: 'system', content: SYSTEM_PROMPT },
+                            ...conversationHistory
+                        ],
+                        max_tokens: 600,
+                        temperature: 0.3
+                    })
+                });
+
+                removeTyping(typingId);
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error?.message || 'API error');
+                }
+
+                const data = await res.json();
+                const reply = data.choices?.[0]?.message?.content || 'Sorry, I could not get a response.';
+                conversationHistory.push({ role: 'assistant', content: reply });
+                addBotMessage(reply);
+
+            } catch (e) {
+                removeTyping(typingId);
+                addBotMessage(`Sorry, I'm having trouble connecting right now. Please try again or email **icadib26@iitism.ac.in** for direct help.\n\n(Error: ${e.message})`);
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        function sendChip(el) {
+            const text = el.textContent.replace(/^[^\w]+/, '').trim();
+            document.getElementById('chatInput').value = text;
+            sendMessage(text);
+        }
+
+        /* ── MESSAGES ── */
+        function addUserMessage(text) {
+            const msgs = document.getElementById('chatMessages');
+            const time = getTime();
+            const div = document.createElement('div');
+            div.className = 'msg-row user';
+            div.innerHTML = `
+    <div>
+      <div class="msg-bubble">${escHtml(text)}</div>
+      <div class="msg-time">${time}</div>
+    </div>`;
+            msgs.appendChild(div);
+            scrollBottom();
+        }
+
+        function addBotMessage(text) {
+            const msgs = document.getElementById('chatMessages');
+            const time = getTime();
+            const div = document.createElement('div');
+            div.className = 'msg-row bot';
+            div.innerHTML = `
+    <div class="msg-icon">A</div>
+    <div>
+      <div class="msg-bubble">${formatBot(text)}</div>
+      <div class="msg-time">${time}</div>
+    </div>`;
+            msgs.appendChild(div);
+            scrollBottom();
+        }
+
+        function showTyping() {
+            const msgs = document.getElementById('chatMessages');
+            const id = 'typing-' + Date.now();
+            const div = document.createElement('div');
+            div.className = 'msg-row bot';
+            div.id = id;
+            div.innerHTML = `
+    <div class="msg-icon">A</div>
+    <div class="typing-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+            msgs.appendChild(div);
+            scrollBottom();
+            return id;
+        }
+
+        function removeTyping(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        /* ── HELPERS ── */
+        function escHtml(str) {
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function formatBot(text) {
+            // Convert markdown-like to HTML
+            return text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/^- (.+)$/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>')
+                .replace(/^(?!<)/, '<p>')
+                .replace(/(?!>)$/, '</p>');
+        }
+
+        function scrollBottom() {
+            const msgs = document.getElementById('chatMessages');
+            setTimeout(() => msgs.scrollTop = msgs.scrollHeight, 50);
+        }
+
+        function getTime() {
+            return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function handleKey(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+            document.getElementById('sendBtn').disabled = !el.value.trim();
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && isOpen) toggleChat();
+        });
+    </script>
+</body>
+
+</html>
