@@ -1,4 +1,6 @@
 /* ADIB Assistant - Premium Glassmorphism UI */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 :root {
     --chat-accent: #FF5A1F;
     --chat-accent-glow: rgba(255, 90, 31, 0.4);
@@ -9,6 +11,9 @@
     --chat-text: #1E293B;
     --chat-muted: #64748B;
     --chat-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    
+    --chat-font-main: 'Outfit', sans-serif;
+    --chat-font-heading: 'Playfair Display', serif;
 }
 
 #chatbot-container {
@@ -16,7 +21,7 @@
     bottom: 2rem;
     right: 2rem;
     z-index: 10000;
-    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    font-family: var(--chat-font-main);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -149,13 +154,14 @@
 }
 
 .chat-header-status {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--chat-font-main);
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.5);
     display: flex;
     align-items: center;
-    gap: 4px;
-    margin-top: 2px;
+    gap: 6px;
+    margin-top: 4px;
+    font-weight: 400;
 }
 
 .chat-header-status::before {
@@ -211,27 +217,30 @@
 
 .msg {
     max-width: 85%;
-    padding: 0.8rem 1.1rem;
-    font-size: 0.95rem;
+    padding: 0.9rem 1.25rem;
+    font-size: 1rem;
     line-height: 1.6;
     animation: msgAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    letter-spacing: -0.01em;
 }
 
 .msg-user {
     align-self: flex-end;
     background: var(--chat-gradient);
     color: white;
-    border-radius: 20px 20px 4px 20px;
+    border-radius: 24px 24px 4px 24px;
     box-shadow: 0 4px 15px rgba(255, 90, 31, 0.2);
+    font-weight: 500;
 }
 
 .msg-bot {
     align-self: flex-start;
     background: white;
     color: var(--chat-text);
-    border-radius: 20px 20px 20px 4px;
+    border-radius: 24px 24px 24px 4px;
     box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
     border: 1px solid rgba(15, 23, 42, 0.05);
+    font-weight: 400;
 }
 
 .msg-time {
@@ -284,12 +293,12 @@
     background: white;
     border: 1px solid rgba(255, 90, 31, 0.15);
     color: var(--chat-text);
-    border-radius: 12px;
-    padding: 0.5rem 1rem;
+    border-radius: 14px;
+    padding: 0.6rem 1.1rem;
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
@@ -315,14 +324,16 @@
 #chat-input {
     flex: 1;
     border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    padding: 0.75rem 1rem;
-    font-size: 0.95rem;
+    border-radius: 18px;
+    padding: 0.85rem 1.1rem;
+    font-size: 1rem;
+    font-family: var(--chat-font-main);
     resize: none;
     outline: none;
     transition: all 0.3s ease;
     max-height: 120px;
     line-height: 1.5;
+    font-weight: 400;
 }
 
 #chat-input:focus {
