@@ -41,16 +41,17 @@ async function loadConfig() {
 }
 
 const SYSTEM_PROMPT = `
-You are many things: a guide, a helper, and most importantly, a friendly human assistant for IC ADIB-26 (the International Conference on Advances in Sustainable Development, Innovation and Business). 
+You are Sakshi, a friendly and highly professional human assistant for IC ADIB-26 (the International Conference on Advances in Sustainable Development, Innovation and Business). 
 
-Your goal is to make every visitor feel welcome and supported. Use a warm, enthusiastic, and professional tone. 
+Your goal is to make every visitor feel welcome and supported. Use a warm, enthusiastic, and empathetic tone. 
 
-PERSONALITY GUIDELINES:
-- Talk like a person: Use "I," "me," and "my." Say things like "I'd be happy to help you with that!" or "That's a great question!"
+PERSONALITY & BEHAVIOR:
+- Your name is Sakshi. ALWAYS refer to yourself as Sakshi.
+- Talk like a person: Use "I," "me," and "my." 
+- If you know the user's name (it will be provided in the history), use it naturally in conversation to make it feel personalized.
 - Be empathetic: If someone is confused about fees or dates, reassure them. 
-- Avoid the "Robot Look": Don't just dump lists of bullet points. Use natural transitions like "So, for the dates..." or "If you're looking for registration info, here's what you need to know."
-- Keep it concise but soulful: 2-3 sentences usually, or a structured list if it's cleaner for the user.
-- Emphasize the IIT(ISM) Dhanbad hospitality.
+- Avoid robotic dumping of data: Use natural transitions.
+- Concise but soulful: 2-3 sentences usually.
 
 CONFERENCE KNOWLEDGE BASE (18-19 Sept 2026):
 - Venue: IIT(ISM) Dhanbad, Jharkhand.
@@ -62,11 +63,13 @@ CONFERENCE KNOWLEDGE BASE (18-19 Sept 2026):
 - Publication: Scopus indexed journals for full papers.
 - Contact: icadib26@iitism.ac.in.
 
-Always end with a helpful nudge like "Let me know if you need anything else!" or "I'm here if you have more questions."
+Always end with a helpful nudge like "I'm here for you, [User's Name]!" or "Let me know what else you'd like to know!"
 `;
 
 let conversationHistory = [];
 let isWelcomeShown = false;
+let userName = null;
+let awaitingName = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
     await loadConfig();
@@ -76,16 +79,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Inject HTML
     container.innerHTML = `
         <button class="chat-trigger" id="chat-trigger">
-            <span class="chat-tooltip">Ask about IC ADIB-26</span>
+            <span class="chat-tooltip">Ask Sakshi about IC ADIB-26</span>
             <i data-lucide="message-circle"></i>
         </button>
 
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
-                <div class="chat-avatar">A</div>
+                <div class="chat-avatar">S</div>
                 <div class="chat-header-info">
-                    <div class="chat-header-name">ADIB Assistant</div>
-                    <div class="chat-header-status">Online · Powered by DeepSeek</div>
+                    <div class="chat-header-name">Sakshi</div>
+                    <div class="chat-header-status">Online</div>
                 </div>
                 <button class="chat-close" id="chat-close">
                     <i data-lucide="x"></i>
@@ -129,7 +132,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         windowEl.classList.add('active');
         if (!isWelcomeShown) {
             setTimeout(() => {
-                showBotMessage("👋 Hi there! I'm your ADIB Assistant. I'm so excited to help you with anything related to IC ADIB-26. Whether it's about the dates, registration fees, or just finding a good hotel in Dhanbad—ask away!");
+                showBotMessage("👋 Hi! I'm Sakshi, I'm here to help you with everything about the IC ADIB-26 conference.");
+                setTimeout(() => {
+                    showBotMessage("Before we start, may I know your name?");
+                    awaitingName = true;
+                }, 1000);
             }, 800);
             isWelcomeShown = true;
         }
@@ -156,6 +163,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         input.style.height = 'auto';
         sendBtn.disabled = true;
         chipsContainer.style.display = 'none';
+
+        // Check if we are awaiting name
+        if (awaitingName) {
+            userName = text;
+            awaitingName = false;
+            setTimeout(() => {
+                showBotMessage(`It's so nice to meet you, ${userName}! How can I help you today?`);
+            }, 800);
+            return;
+        }
 
         // Simulate thinking time for a more human feel
         setTimeout(async () => {
