@@ -1,10 +1,24 @@
-/**
- * ADIB Assistant - IC ADIB-26
- * AI Chatbot Logic with DeepSeek API
- */
+// API Key will be loaded from .env for local security
+let DEEPSEEK_API_KEY = null;
 
-// Placeholder for API Key. For production, consider a backend proxy.
-const DEEPSEEK_API_KEY = 'YOUR_DEEPSEEK_API_KEY'; 
+async function loadConfig() {
+    try {
+        const resp = await fetch('.env');
+        if (resp.ok) {
+            const text = await resp.text();
+            const lines = text.split('\n');
+            for (const line of lines) {
+                if (line.startsWith('DEEPSEEK_API_KEY=')) {
+                    DEEPSEEK_API_KEY = line.split('=')[1].trim();
+                    console.log('ADIB Assistant: API Key loaded from .env');
+                    break;
+                }
+            }
+        }
+    } catch (err) {
+        console.warn('ADIB Assistant: Local .env could not be loaded. Ensure it exists for local testing.');
+    }
+}
 
 const SYSTEM_PROMPT = `
 You are ADIB Assistant, the official AI assistant for 
@@ -105,7 +119,8 @@ Kings Resort, TMG, Clarks Inn Suites, Wedlock Greens, etc.
 let conversationHistory = [];
 let isWelcomeShown = false;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadConfig();
     const container = document.getElementById('chatbot-container');
     if (!container) return;
 
@@ -271,6 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // API Integration
     async function getBotResponse() {
+        if (!DEEPSEEK_API_KEY) {
+            console.error('ADIB Assistant: No API Key found.');
+            return "I'm sorry, my API Key is not configured correctly in the .env file. Please ensure it's set up.";
+        }
         try {
             const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
                 method: 'POST',
