@@ -9,7 +9,7 @@ async function loadConfig() {
             return;
         }
 
-        const resp = await fetch('.env');
+        const resp = await fetch('config.env');
         if (resp.ok) {
             const text = await resp.text();
             const lines = text.split(/\r?\n/);
@@ -312,12 +312,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             if (configError && configError.startsWith('fetch_')) {
                 const status = configError.split('_')[1];
-                return `❌ **Server Error (${status}):** Your local server is blocking the \`.env\` file. Try renaming it to \`env.txt\` and update the code, or check your server settings.`;
+                return `❌ **Server Error (${status}):** Your local server is blocking the \`config.env\` file. Check your server settings.`;
             }
             if (configError === "parse") {
-                return "❌ **Parsing Error:** Found \`.env\` but couldn't find \`DEEPSEEK_API_KEY=\` inside it. Check the file content.";
+                return "❌ **Parsing Error:** Found \`config.env\` but couldn't find \`DEEPSEEK_API_KEY=\` inside it.";
             }
-            return "❌ **Configuration Error:** API Key not found. Please ensure your \`.env\` file exists and contains \`DEEPSEEK_API_KEY=your_key\`.";
+            return "❌ **Configuration Error:** API Key not found. Please ensure your \`config.env\` file exists and contains \`DEEPSEEK_API_KEY=your_key\`.";
         }
         try {
             const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
