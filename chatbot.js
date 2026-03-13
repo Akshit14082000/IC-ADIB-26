@@ -3,20 +3,36 @@ let DEEPSEEK_API_KEY = null;
 
 async function loadConfig() {
     try {
+        // Detect if running via file:// protocol which blocks fetch
+        if (window.location.protocol === 'file:') {
+            console.warn('ADIB Assistant: Running via file:// protocol. Fetching .env is blocked by browser security. Please use a local server (e.g., Live Server) or hardcode the key for local testing.');
+            return;
+        }
+
         const resp = await fetch('.env');
         if (resp.ok) {
             const text = await resp.text();
-            const lines = text.split('\n');
-            for (const line of lines) {
-                if (line.startsWith('DEEPSEEK_API_KEY=')) {
-                    DEEPSEEK_API_KEY = line.split('=')[1].trim();
-                    console.log('ADIB Assistant: API Key loaded from .env');
+            const lines = text.split(/\r?\n/);
+            for (let line of lines) {
+                line = line.trim();
+                if (!line || line.startsWith('#')) continue;
+                
+                const match = line.match(/^DEEPSEEK_API_KEY\s*=\s*(.*)$/);
+                if (match) {
+                    let value = match[1].trim();
+                    // Remove wrapping quotes if present
+                    if ((value.startsWith('"') && value.endsWith('"')) || 
+                        (value.startsWith("'") && value.endsWith("'"))) {
+                        value = value.substring(1, value.length - 1);
+                    }
+                    DEEPSEEK_API_KEY = value;
+                    console.log('ADIB Assistant: API Key loaded successfully.');
                     break;
                 }
             }
         }
     } catch (err) {
-        console.warn('ADIB Assistant: Local .env could not be loaded. Ensure it exists for local testing.');
+        console.error('ADIB Assistant: Error loading .env:', err);
     }
 }
 
