@@ -840,6 +840,55 @@
             transition: transform 0.3s ease;
         }
 
+        /* Mobile Header Fixes */
+        @media (max-width: 768px) {
+            header {
+                top: 0;
+                width: 100%;
+                max-width: 100%;
+                transform: none;
+                left: 0;
+            }
+
+            .navbar {
+                border-radius: 0;
+                padding: 0.6rem 1rem;
+                border-left: none;
+                border-right: none;
+                border-top: none;
+                background: rgba(7, 11, 20, 0.85);
+            }
+
+            header.scrolled .navbar {
+                padding: 0.6rem 1rem;
+                border-radius: 0;
+            }
+
+            .logo-institute {
+                display: none;
+            }
+
+            .logo-divider {
+                display: none;
+            }
+
+            .logo {
+                gap: 0.75rem;
+            }
+
+            .logo img {
+                height: 32px !important;
+            }
+
+            .logo h1 {
+                font-size: 1.1rem;
+            }
+
+            .grid-menu-btn {
+                padding: 8px;
+            }
+        }
+
         .modal-overlay.active .modal-content {
             transform: translateY(0);
         }
