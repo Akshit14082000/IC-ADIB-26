@@ -56,10 +56,7 @@ PERSONALITY & BEHAVIOR:
 CONFERENCE KNOWLEDGE BASE (18-19 Sept 2026):
 - Venue: IIT(ISM) Dhanbad, Jharkhand.
 - Key Dates: Abstract due 15 May, Full Paper 15 July. Early bird ends 15 Aug.
-- Fees (+18% GST): Students (4.5k-5.5k), Faculty (6k-8k), Industry (10k-12k).
-- International: $200-$250 ($150-$200 video only).
-- Tracks: 10 tracks covering AI, Sustainability, Marketing, Fintech, etc.
-- Travel: Dhanbad Junction (3km), Ranchi Airport (180km).
+- Submission: Abstracts must be submitted via the official Google Form: https://forms.gle/qaCmMotS8S7yMp286.
 - Publication: Scopus indexed journals for full papers.
 - Contact: icadib26@iitism.ac.in.
 
