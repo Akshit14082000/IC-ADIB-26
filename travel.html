@@ -349,11 +349,34 @@
 
         /* Hero Selection */
         .travel-hero {
-            background-color: var(--bg-dark);
-            padding: 10rem 0 6rem;
-            text-align: center;
             position: relative;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/imag_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             overflow: hidden;
+            padding: 10rem 0 6rem;
+        }
+
+        .glass-hero-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: clamp(2rem, 5vw, 4rem);
+            max-width: 1100px;
+            width: 90%;
+            margin: 0 auto;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .glow-orb {
@@ -1039,6 +1062,8 @@
                 <div class="logo-divider"></div>
                 <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
                     style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
+                <img src="images/imag_2.jpg" alt="IC ADIB Logo"
+                    style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
             </div>
 
             <div class="nav-links">
@@ -1048,6 +1073,7 @@
                 <a href="index.html#timeline">Dates</a>
                 <a href="travel.html" class="active">Travel</a>
                 <a href="register.html">Fees</a>
+                <a href="index.html#committee">Committee</a>
             </div>
 
             <button class="grid-menu-btn" id="sidebarToggle" aria-label="Toggle Menu">
@@ -1073,6 +1099,7 @@
             <a href="index.html#timeline" class="side-link">Dates</a>
             <a href="travel.html" class="side-link active">Travel</a>
             <a href="register.html" class="side-link">Fees</a>
+            <a href="index.html#committee" class="side-link">Committee</a>
         </nav>
         <div class="side-nav-footer">
             <a href="register.html" class="btn btn-accent" style="width: 100%;">Register Now</a>
@@ -1083,16 +1110,28 @@
     <main>
         <!-- Hero Section -->
         <section class="travel-hero">
-            <div class="glow-orb glow-1"></div>
-            <div class="glow-orb glow-2"></div>
-            <div class="container hero-content">
-                <span class="section-label reveal">Delegate Guide</span>
-                <h1 class="reveal" style="transition-delay: 100ms;">Travel & Accommodation</h1>
-                <p class="hero-subtitle reveal" style="transition-delay: 200ms;">IIT(ISM) DHANBAD · JHARKHAND, INDIA</p>
-                <div class="hero-meta reveal" style="transition-delay: 300ms;">
-                    <div class="meta-item"><i data-lucide="map-pin"></i> Dhanbad, Jharkhand 826004</div>
-                    <div class="meta-item"><i data-lucide="train"></i> Dhanbad Junction — 3 km</div>
-                    <div class="meta-item"><i data-lucide="plane"></i> Nearest Airport — Ranchi (180 km)</div>
+            <div class="glass-hero-card reveal">
+                <div class="hero-content">
+                    <span class="section-label">Delegate Guide</span>
+                    <h1 class="title-display" style="color: var(--white); font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 1.5rem;">Travel & Accommodation</h1>
+                    <p class="hero-subtitle" style="font-family: var(--font-mono); color: rgba(255, 255, 255, 0.6); letter-spacing: 4px; margin-bottom: 3rem; text-transform: uppercase;">IIT(ISM) DHANBAD · JHARKHAND, INDIA</p>
+                    
+                    <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 3.5rem;"></div>
+
+                    <div class="hero-meta" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; color: var(--white);">
+                        <div class="meta-item" style="display: flex; align-items: center; gap: 0.8rem;">
+                            <i data-lucide="map-pin" style="color: var(--accent);"></i>
+                            <span>Dhanbad, Jharkhand 826004</span>
+                        </div>
+                        <div class="meta-item" style="display: flex; align-items: center; gap: 0.8rem;">
+                            <i data-lucide="train" style="color: var(--accent);"></i>
+                            <span>Dhanbad Junction — 3 km</span>
+                        </div>
+                        <div class="meta-item" style="display: flex; align-items: center; gap: 0.8rem;">
+                            <i data-lucide="plane" style="color: var(--accent);"></i>
+                            <span>Nearest Airport — Ranchi (180 km)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1691,7 +1730,7 @@
                         <li><a href="index.html#about">About Conference</a></li>
                         <li><a href="index.html#tracks">Research Tracks</a></li>
                         <li><a href="index.html#timeline">Important Dates</a></li>
-                        <li><a href="travel.html">Travel & Stay</a></li>
+                        <li><a href="index.html#committee">Committee</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -1699,14 +1738,15 @@
                     <ul>
                         <li><a href="https://forms.gle/qaCmMotS8S7yMp286" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Submit Abstract</a></li>
                         <li><a href="register.html">Register Now</a></li>
-                        <li><a href="#" onclick="openDownloadModal('brochure', event)">Brochure PDF</a></li>
+                        <li><a href="#" onclick="openDownloadModal('brochure', event)">Conference Brochure</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div>
                     <img src="images/img_1.png" alt="IIT (ISM) Dhanbad 1926-2026 Centenary Banner" loading="lazy"
-                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8;">
+                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8; transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
                     <p>&copy; 2026 IC ADIB-26 &middot; IIT(ISM) Dhanbad. All Rights Reserved.</p>
                 </div>
                 <div class="footer-credits">
@@ -1838,8 +1878,5 @@
     <div id="chatbot-container"></div>
     <script src="chatbot.js"></script>
 </body>
-
-</html>
-y>
 
 </html>

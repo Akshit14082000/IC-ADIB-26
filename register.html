@@ -379,27 +379,41 @@
 
         /* Hero */
         .page-hero {
-            background-color: var(--bg-dark);
-            padding: clamp(8rem, 15vw, 12rem) 0 clamp(4rem, 10vw, 6rem);
-            text-align: center;
             position: relative;
+            min-height: 80vh;
+            background-color: var(--bg-dark);
+            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/imag_1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             overflow: hidden;
+            padding: 8rem 0 6rem;
+        }
+
+        .glass-hero-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: clamp(2rem, 5vw, 4rem);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
         }
 
         .page-hero h1 {
             color: var(--white);
-            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-size: clamp(2.5rem, 6vw, 5rem);
             margin-bottom: 1.5rem;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .page-hero p {
-            font-family: var(--font-mono);
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            line-height: 1.1;
         }
 
         /* Fees Section */
@@ -624,6 +638,16 @@
 
             .banner-text {
                 flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                background-attachment: scroll;
+                min-height: 60vh;
+            }
+            .glass-hero-card {
+                padding: 2.5rem 1.5rem;
             }
         }
 
@@ -870,6 +894,8 @@
                 <div class="logo-divider"></div>
                 <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
                     style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
+                <img src="images/imag_2.jpg" alt="IC ADIB Logo"
+                    style="height: 35px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));">
             </div>
 
             <div class="nav-links">
@@ -879,6 +905,7 @@
                 <a href="index.html#timeline">Dates</a>
                 <a href="travel.html">Travel</a>
                 <a href="#" class="active">Fees</a>
+                <a href="index.html#committee">Committee</a>
             </div>
 
             <button class="grid-menu-btn" id="sidebarToggle" aria-label="Toggle Menu">
@@ -921,10 +948,10 @@
     <main>
         <!-- Page Hero -->
         <section class="page-hero">
-            <div class="container">
-                <span class="section-label" style="color: rgba(255,255,255,0.5);">Join Us</span>
-                <h1 class="reveal">Conference Fees & Registration</h1>
-                <p class="reveal">IC ADIB-26 · 18th–19th September 2026</p>
+            <div class="glass-hero-card reveal">
+                <span class="section-label" style="color: var(--accent); margin-bottom: 1rem; letter-spacing: 4px;">Join Us</span>
+                <h1>Conference Fees & Registration</h1>
+                <p style="font-family: var(--font-mono); color: rgba(255, 255, 255, 0.6); letter-spacing: 2px; text-transform: uppercase;">IC ADIB-26 · 18th–19th September 2026</p>
             </div>
         </section>
 
@@ -1116,17 +1143,22 @@
                     <ul>
                         <li><a href="https://forms.gle/qaCmMotS8S7yMp286" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Submit Abstract</a></li>
                         <li><a href="#pricing">Register Now</a></li>
-                        <li><a href="#" onclick="openDownloadModal('brochure', event)">Brochure PDF</a></li>
+                        <li><a href="#" onclick="openDownloadModal('brochure', event)">Conference Brochure</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
                 <div>
                     <img src="images/img_1.png" alt="IIT (ISM) Dhanbad 1926-2026 Centenary Banner" loading="lazy"
-                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8;">
+                        style="max-height: 60px; width: auto; margin-bottom: 1.5rem; opacity: 0.8; transition: opacity 0.3s;"
+                        onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
                     <p>&copy; 2026 IC ADIB-26 &middot; IIT(ISM) Dhanbad. All Rights Reserved.</p>
                 </div>
                 <div class="footer-credits">
+                    <div style="display:flex; gap: 1.5rem;">
+                        <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="twitter"></i></a>
+                        <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="linkedin"></i></a>
+                    </div>
                     <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3); letter-spacing: 0.5px;">
                         Designed & Developed by <span style="color: rgba(255,255,255,0.6); font-weight: 500;">Akshit Sharma</span>
                     </p>
