@@ -400,40 +400,49 @@
 
             .navbar {
                 border-radius: 0;
-                padding: 0.6rem 1rem;
+                padding: 0.8rem 1rem;
                 border-left: none;
                 border-right: none;
                 border-top: none;
-                background: rgba(7, 11, 20, 0.85);
+                background: rgba(7, 11, 20, 0.9);
+                display: flex;
+                align-items: center;
             }
 
             header.scrolled .navbar {
-                padding: 0.6rem 1rem;
+                padding: 0.8rem 1rem;
                 border-radius: 0;
-            }
-
-            .logo-institute {
-                display: none;
-            }
-
-            .logo-divider {
-                display: none;
             }
 
             .logo {
                 gap: 0.75rem;
+                display: flex;
+                align-items: center;
             }
 
             .logo img {
                 height: 32px !important;
+                width: auto;
+                display: block;
             }
 
-            .logo h1 {
+            .logo h1, .logo span {
                 font-size: 1.1rem;
+                margin: 0;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+            }
+
+            .logo-institute, .logo-divider {
+                display: none;
             }
 
             .grid-menu-btn {
                 padding: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
 
