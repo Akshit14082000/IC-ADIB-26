@@ -51,15 +51,22 @@ const KNOWLEDGE_BASE = {
     contact: {
         keywords: ['contact', 'email', 'help', 'support', 'organizer', 'reach out', 'number'],
         responses: [
-            "You can reach the organizing team at **icadib26@iitism.ac.in**. They are very responsive!",
-            "For any specific queries, feel free to email **icadib26@iitism.ac.in**."
+            "You can reach the organizing team at **icadib26@iitism.ac.in**. For comprehensive details, please refer to the documents in our **Pdf folder**.",
+            "For any specific queries, feel free to email **icadib26@iitism.ac.in**. You can also find all official info in the `Pdf/IC-ADIB-26.pdf` brochure."
         ]
     },
     travel: {
         keywords: ['travel', 'reach', 'airport', 'train', 'station', 'flight', 'how to'],
         responses: [
-            "Dhanbad Junction is just 3km away. If you're flying, Ranchi Airport (180km) or Durgapur (100km) are the best options. I can help with hotel info too!",
-            "The easiest way is by train to Dhanbad Junction. From there, a quick 10-minute auto-ride gets you to IIT(ISM)."
+            "Dhanbad Junction is just 3km away. Full travel and accommodation details are available in the **Official Brochure (Pdf folder)**. I can help with hotel info too!",
+            "The easiest way is by train to Dhanbad Junction. Check the `Pdf/IC-ADIB-26.pdf` for a detailed travel guide."
+        ]
+    },
+    docs: {
+        keywords: ['pdf', 'document', 'brochure', 'guide', 'info', 'details', 'download'],
+        responses: [
+            "You can find all official information and the conference brochure in our **Pdf folder**. I highly recommend checking `IC-ADIB-26.pdf` for the most accurate details!",
+            "All session details and official guidelines are in the **Pdf/IC-ADIB-26.pdf**. Would you like me to help you find something specific in there?"
         ]
     }
 };
@@ -116,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chipsContainer = document.getElementById('chat-chips');
 
     const PAGE_CONTEXTS = {
-        'index.html': { greeting: "Welcome to IC ADIB-26! I'm Sakshi. Ready to explore our tracks and dates?", chips: ["📅 Key Dates", "📚 Tracks", "💰 Registration", "🏫 Venue"] },
-        'register.html': { greeting: "Ready to join us? I'm Sakshi—I can help with fees or the registration process!", chips: ["💰 Fees", "⏰ Deadlines", "📝 Register", "💳 Payment"] },
-        'travel.html': { greeting: "Planning your trip? I'm Sakshi! I can guide you on travel and stays.", chips: ["📍 Location", "🏨 Hotels", "🚆 Train", "✈️ Airport"] },
-        'default': { greeting: "👋 Hi! I'm Sakshi. How can I help you with IC ADIB-26?", chips: ["📅 Dates", "💰 Fees", "📚 Tracks", "📍 Venue"] }
+        'index.html': { greeting: "Welcome to IC ADIB-26! I'm Sakshi. Ready to explore our tracks and dates?", chips: ["📅 Key Dates", "📚 Tracks", "💰 Registration", "🏫 Venue", "📄 Download Brochure"] },
+        'register.html': { greeting: "Ready to join us? I'm Sakshi—I can help with fees or the registration process!", chips: ["💰 Fees", "⏰ Deadlines", "📝 Register", "💳 Payment", "📄 Download Brochure"] },
+        'travel.html': { greeting: "Planning your trip? I'm Sakshi! I can guide you on travel and stays.", chips: ["📍 Location", "🏨 Hotels", "🚆 Train", "✈️ Airport", "📄 Download Brochure"] },
+        'default': { greeting: "👋 Hi! I'm Sakshi. How can I help you with IC ADIB-26?", chips: ["📅 Dates", "💰 Fees", "📚 Tracks", "📍 Venue", "📄 Download Brochure"] }
     };
 
     function getPageContext() {
@@ -152,7 +159,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const chip = document.createElement('div');
             chip.className = 'chip';
             chip.innerText = text;
-            chip.onclick = () => { input.value = text.replace(/^[^\w]+/, '').trim(); handleSend(); };
+            chip.onclick = () => { 
+                if (text.includes('Download Brochure')) {
+                    window.open('Pdf/IC-ADIB-26.pdf', '_blank');
+                    return;
+                }
+                input.value = text.replace(/^[^\w]+/, '').trim(); 
+                handleSend(); 
+            };
             chipsContainer.appendChild(chip);
         });
         scrollToBottom();
