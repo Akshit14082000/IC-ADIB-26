@@ -51,22 +51,22 @@ const KNOWLEDGE_BASE = {
     contact: {
         keywords: ['contact', 'email', 'help', 'support', 'organizer', 'reach out', 'number'],
         responses: [
-            "You can reach the organizing team at **icadib26@iitism.ac.in**. For comprehensive details, please refer to the documents in our **Pdf folder**.",
-            "For any specific queries, feel free to email **icadib26@iitism.ac.in**. You can also find all official info in the `Pdf/IC-ADIB-26.pdf` brochure."
+            "You can reach the organizing team at **icadib26@iitism.ac.in**. For comprehensive details, please refer to the documents in our **pdf folder**.",
+            "For any specific queries, feel free to email **icadib26@iitism.ac.in**. You can also find all official info in the `pdf/conference_brochure.pdf` brochure."
         ]
     },
     travel: {
         keywords: ['travel', 'reach', 'airport', 'train', 'station', 'flight', 'how to'],
         responses: [
-            "Dhanbad Junction is just 3km away. Full travel and accommodation details are available in the **Official Brochure (Pdf folder)**. I can help with hotel info too!",
-            "The easiest way is by train to Dhanbad Junction. Check the `Pdf/IC-ADIB-26.pdf` for a detailed travel guide."
+            "Dhanbad Junction is just 3km away. Full travel and accommodation details are available in the **Official Brochure (pdf folder)**. I can help with hotel info too!",
+            "The easiest way is by train to Dhanbad Junction. Check the `pdf/conference_brochure.pdf` for a detailed travel guide."
         ]
     },
     docs: {
         keywords: ['pdf', 'document', 'brochure', 'guide', 'info', 'details', 'download'],
         responses: [
-            "You can find all official information and the conference brochure in our **Pdf folder**. I highly recommend checking `IC-ADIB-26.pdf` for the most accurate details!",
-            "All session details and official guidelines are in the **Pdf/IC-ADIB-26.pdf**. Would you like me to help you find something specific in there?"
+            "You can find all official information and the conference brochure in our **pdf folder**. I highly recommend checking `conference_brochure.pdf` for the most accurate details!",
+            "All session details and official guidelines are in the **pdf/conference_brochure.pdf**. Would you like me to help you find something specific in there?"
         ]
     }
 };
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chip.innerText = text;
             chip.onclick = () => { 
                 if (text.includes('Download Brochure')) {
-                    window.open('Pdf/IC-ADIB-26.pdf', '_blank');
+                    window.open('pdf/conference_brochure.pdf', '_blank');
                     return;
                 }
                 input.value = text.replace(/^[^\w]+/, '').trim(); 
