@@ -807,8 +807,10 @@
         .tracks-section::before {
             content: '';
             position: absolute;
-            top: 0%; left: -10%;
-            width: 800px; height: 800px;
+            top: 0%;
+            left: -10%;
+            width: 800px;
+            height: 800px;
             background: radial-gradient(circle, rgba(255, 90, 31, 0.4) 0%, rgba(255, 90, 31, 0) 70%);
             z-index: 0;
             pointer-events: none;
@@ -818,8 +820,10 @@
         .tracks-section::after {
             content: '';
             position: absolute;
-            bottom: 0%; right: -10%;
-            width: 900px; height: 900px;
+            bottom: 0%;
+            right: -10%;
+            width: 900px;
+            height: 900px;
             background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 70%);
             z-index: 0;
             pointer-events: none;
@@ -868,7 +872,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: 
+            box-shadow:
                 0 10px 30px rgba(0, 0, 0, 0.04),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.2);
         }
@@ -876,7 +880,7 @@
         .track-cell:hover {
             background: rgba(255, 255, 255, 0.6);
             transform: translateY(-5px) scale(1.01);
-            box-shadow: 
+            box-shadow:
                 0 20px 40px rgba(0, 0, 0, 0.08),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.5);
         }
@@ -884,7 +888,10 @@
         .track-cell::after {
             content: '';
             position: absolute;
-            top: 0; left: -100%; width: 50%; height: 100%;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
             transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             transform: skewX(-20deg);
@@ -943,7 +950,8 @@
             color: #94A3B8;
             width: 44px;
             height: 44px;
-            border-radius: 12px; /* Elegant Squircle */
+            border-radius: 12px;
+            /* Elegant Squircle */
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%);
             border: 1px solid rgba(255, 255, 255, 1);
             display: flex;
@@ -955,9 +963,10 @@
             transform: translateY(-50%);
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 1;
-            box-shadow: 
+            box-shadow:
                 0 4px 15px rgba(0, 0, 0, 0.05),
-                inset 0 2px 4px rgba(255, 255, 255, 1); /* Inner rim lighting */
+                inset 0 2px 4px rgba(255, 255, 255, 1);
+            /* Inner rim lighting */
             opacity: 1;
             padding: 0;
         }
@@ -969,17 +978,21 @@
         }
 
         .track-cell:hover .track-icon {
-            color: var(--accent); /* Only the icon itself glows orange */
-            background: #FFFFFF; /* Base stays clean white */
+            color: var(--accent);
+            /* Only the icon itself glows orange */
+            background: #FFFFFF;
+            /* Base stays clean white */
             border-color: rgba(255, 90, 31, 0.2);
-            transform: translateY(-50%) scale(1.08); /* Sophisticated lift without rotation */
-            box-shadow: 
+            transform: translateY(-50%) scale(1.08);
+            /* Sophisticated lift without rotation */
+            box-shadow:
                 0 15px 30px rgba(255, 90, 31, 0.15),
                 inset 0 2px 5px rgba(255, 255, 255, 1);
         }
 
         .track-cell:hover .track-icon svg {
-            transform: scale(1.1); /* Subtle inner element scaling */
+            transform: scale(1.1);
+            /* Subtle inner element scaling */
         }
 
         /* Timeline Editorial */
@@ -2071,7 +2084,7 @@
                     <!-- <p class="hero-subtitle reveal" style="transition-delay: 200ms; margin-top: 1rem;">International
                         Conference On</p> -->
                     <h2 class="title-display reveal" style="transition-delay: 100ms;">International
-                        Conference On Advances in <i>Sustainable</i>
+                        Conference On Advances in Sustainable
                         Development & Business</h2>
                     <p class="hero-subtitle reveal" style="transition-delay: 200ms; margin-top: 1rem;">IC ADIB-26</p>
 
