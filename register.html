@@ -382,7 +382,7 @@
             position: relative;
             min-height: 80vh;
             background-color: var(--bg-dark);
-            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/imag_1.jpg');
+            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/Home_Img.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -649,7 +649,7 @@
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .fees-table thead {
                 display: none;
             }
@@ -881,55 +881,70 @@
         /* Master Mobile Header Fix - Placed at the end for absolute priority */
         @media (max-width: 768px) {
             header {
-                top: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                transform: none !important;
-                left: 0 !important;
+                top: 1rem !important;
+                width: 95% !important;
+                max-width: 95% !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
 
             .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-                border-left: none !important;
-                border-right: none !important;
-                border-top: none !important;
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 background: rgba(7, 11, 20, 0.95) !important;
                 width: 100% !important;
                 display: flex !important;
                 align-items: center !important;
+                justify-content: space-between !important;
             }
 
-            header.scrolled .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-            }
-
-            .logo {
-                gap: 0.75rem !important;
+            .nav-logos {
+                gap: 0.3rem !important;
+                flex: 1;
                 display: flex !important;
                 align-items: center !important;
             }
 
-            .logo img {
-                height: 32px !important;
+            .nav-logos img {
+                height: 20px !important;
                 width: auto !important;
             }
 
-            .logo h1, .logo span {
-                font-size: 1.1rem !important;
-                margin: 0 !important;
-                line-height: 1 !important;
-                display: flex !important;
-                align-items: center !important;
+            header.scrolled .navbar {
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
             }
 
-            .logo-institute, .logo-divider {
+            .logo {
+                gap: 0.2rem !important;
+                display: flex !important;
+                align-items: center !important;
+                color: #ffffff !important;
+            }
+
+            .logo img {
+                height: 24px !important;
+                width: auto !important;
+            }
+
+            .logo h1,
+            .logo span,
+            .logo div {
+                font-size: 0.85rem !important;
+                margin: 0 !important;
+                line-height: 1 !important;
+                display: inline-block !important;
+                color: #ffffff !important;
+            }
+
+            .logo-institute,
+            .logo-divider {
                 display: none !important;
             }
 
             .grid-menu-btn {
-                padding: 8px !important;
+                padding: 6px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -942,10 +957,10 @@
 
     <header id="header">
         <nav class="navbar">
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="nav-logos" style="display: flex; align-items: center; gap: 1.5rem;">
                 <a href="index.html" class="logo">
                     <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
-                    <div>IC ADIB<span class="accent">-26</span></div>
+                    <div style="white-space: nowrap;">IC ADIB<span class="accent">-26</span></div>
                 </a>
                 <div class="logo-divider"></div>
                 <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"

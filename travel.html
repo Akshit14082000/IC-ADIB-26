@@ -352,7 +352,7 @@
             position: relative;
             min-height: 100vh;
             background-color: var(--bg-dark);
-            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/imag_1.jpg');
+            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/Home_Img.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -972,6 +972,7 @@
                 padding: 8rem 0 4rem;
             }
         }
+
         /* Download Modal Styles */
         .modal-overlay {
             position: fixed;
@@ -1002,7 +1003,7 @@
             max-width: 500px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
             position: relative;
             transform: translateY(20px);
             transition: transform 0.3s ease;
@@ -1020,7 +1021,7 @@
         }
 
         .modal-desc {
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
             margin-bottom: 2.5rem;
             line-height: 1.6;
         }
@@ -1036,7 +1037,7 @@
             position: absolute;
             top: 1.5rem;
             right: 1.5rem;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
             transition: color 0.3s;
             background: none;
@@ -1047,58 +1048,74 @@
         .close-modal:hover {
             color: #fff;
         }
+
         /* Master Mobile Header Fix - Placed at the end for absolute priority */
         @media (max-width: 768px) {
             header {
-                top: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                transform: none !important;
-                left: 0 !important;
+                top: 1rem !important;
+                width: 95% !important;
+                max-width: 95% !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
 
             .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-                border-left: none !important;
-                border-right: none !important;
-                border-top: none !important;
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 background: rgba(7, 11, 20, 0.95) !important;
                 width: 100% !important;
                 display: flex !important;
                 align-items: center !important;
+                justify-content: space-between !important;
             }
 
-            header.scrolled .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-            }
-
-            .logo {
-                gap: 0.75rem !important;
+            .nav-logos {
+                gap: 0.3rem !important;
+                flex: 1;
                 display: flex !important;
                 align-items: center !important;
             }
 
-            .logo img {
-                height: 32px !important;
+            .nav-logos img {
+                height: 20px !important;
                 width: auto !important;
             }
 
-            .logo h1, .logo span {
-                font-size: 1.1rem !important;
-                margin: 0 !important;
-                line-height: 1 !important;
-                display: flex !important;
-                align-items: center !important;
+            header.scrolled .navbar {
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
             }
 
-            .logo-institute, .logo-divider {
+            .logo {
+                gap: 0.2rem !important;
+                display: flex !important;
+                align-items: center !important;
+                color: #ffffff !important;
+            }
+
+            .logo img {
+                height: 24px !important;
+                width: auto !important;
+            }
+
+            .logo h1,
+            .logo span,
+            .logo div {
+                font-size: 0.85rem !important;
+                margin: 0 !important;
+                line-height: 1 !important;
+                display: inline-block !important;
+                color: #ffffff !important;
+            }
+
+            .logo-institute,
+            .logo-divider {
                 display: none !important;
             }
 
             .grid-menu-btn {
-                padding: 8px !important;
+                padding: 6px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -1111,10 +1128,10 @@
 
     <header id="header">
         <nav class="navbar">
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="nav-logos" style="display: flex; align-items: center; gap: 1.5rem;">
                 <a href="index.html" class="logo">
                     <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
-                    <div>IC ADIB<span class="accent">-26</span></div>
+                    <div style="white-space: nowrap;">IC ADIB<span class="accent">-26</span></div>
                 </a>
                 <div class="logo-divider"></div>
                 <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
@@ -1172,12 +1189,18 @@
             <div class="glass-hero-card reveal">
                 <div class="hero-content">
                     <span class="section-label">Delegate Guide</span>
-                    <h1 class="title-display" style="color: var(--white); font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 1.5rem;">Travel & Accommodation</h1>
-                    <p class="hero-subtitle" style="font-family: var(--font-mono); color: rgba(255, 255, 255, 0.6); letter-spacing: 4px; margin-bottom: 3rem; text-transform: uppercase;">IIT(ISM) DHANBAD · JHARKHAND, INDIA</p>
-                    
-                    <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 3.5rem;"></div>
+                    <h1 class="title-display"
+                        style="color: var(--white); font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 1.5rem;">Travel
+                        & Accommodation</h1>
+                    <p class="hero-subtitle"
+                        style="font-family: var(--font-mono); color: rgba(255, 255, 255, 0.6); letter-spacing: 4px; margin-bottom: 3rem; text-transform: uppercase;">
+                        IIT(ISM) DHANBAD · JHARKHAND, INDIA</p>
 
-                    <div class="hero-meta" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; color: var(--white);">
+                    <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 3.5rem;">
+                    </div>
+
+                    <div class="hero-meta"
+                        style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; color: var(--white);">
                         <div class="meta-item" style="display: flex; align-items: center; gap: 0.8rem;">
                             <i data-lucide="map-pin" style="color: var(--accent);"></i>
                             <span>Dhanbad, Jharkhand 826004</span>
@@ -1188,7 +1211,7 @@
                         </div>
                         <div class="meta-item" style="display: flex; align-items: center; gap: 0.8rem;">
                             <i data-lucide="plane" style="color: var(--accent);"></i>
-                            <span>Nearest Airport — Ranchi (180 km)</span>
+                            <span>Nearest Airport — Durgapur Airport (97.0 km)</span>
                         </div>
                     </div>
                 </div>
@@ -1794,7 +1817,8 @@
                 <div class="footer-column">
                     <h5>Actions</h5>
                     <ul>
-                        <li><a href="https://forms.gle/qaCmMotS8S7yMp286" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">Submit Abstract</a></li>
+                        <li><a href="https://forms.gle/qaCmMotS8S7yMp286" target="_blank" rel="noopener noreferrer"
+                                style="color: var(--accent);">Submit Abstract</a></li>
                         <li><a href="register.html">Register Now</a></li>
                         <li><a href="#" onclick="openDownloadModal('brochure', event)">Conference Brochure</a></li>
                     </ul>
@@ -1815,128 +1839,129 @@
                         <a href="#" style="color: rgba(255,255,255,0.4);"><i data-lucide="linkedin"></i></a>
                     </div>
                     <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3); letter-spacing: 0.5px;">
-                        Designed & Developed by <span style="color: rgba(255,255,255,0.6); font-weight: 500;">Akshit Sharma</span>
+                        Designed & Developed by <span style="color: rgba(255,255,255,0.6); font-weight: 500;">Akshit
+                            Sharma</span>
                     </p>
                 </div>
             </div>
         </div>
         <script>
-        lucide.createIcons();
+            lucide.createIcons();
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.getElementById('header');
+            document.addEventListener('DOMContentLoaded', () => {
+                const header = document.getElementById('header');
 
-            // Header Scroll Effect
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-
-            // Sidebar Logic
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const closeSideNav = document.getElementById('closeSideNav');
-            const sideNav = document.getElementById('sideNav');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-
-            const toggleSidebar = () => {
-                sideNav.classList.toggle('active');
-                sidebarOverlay.classList.toggle('active');
-                document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : '';
-            };
-
-            sidebarToggle.addEventListener('click', toggleSidebar);
-            closeSideNav.addEventListener('click', toggleSidebar);
-            sidebarOverlay.addEventListener('click', toggleSidebar);
-
-            // Reveal Animation on Scroll
-            const revealElements = document.querySelectorAll('.reveal');
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
+                // Header Scroll Effect
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
                     }
                 });
-            }, { threshold: 0.1 });
 
-            revealElements.forEach(el => revealObserver.observe(el));
-        });
-    </script>
+                // Sidebar Logic
+                const sidebarToggle = document.getElementById('sidebarToggle');
+                const closeSideNav = document.getElementById('closeSideNav');
+                const sideNav = document.getElementById('sideNav');
+                const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-    <!-- Download Modal -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeDownloadModal()">
-                <i data-lucide="x"></i>
-            </button>
-            <div class="modal-title" id="modalTitle">File Download</div>
-            <p class="modal-desc" id="modalDesc">Click the button below to download the file.</p>
-            <div class="modal-actions">
-                <button class="btn btn-accent" id="downloadBtn" style="width: 100%; justify-content: center;">
-                    <i data-lucide="download" style="width: 18px; margin-right: 8px;"></i> Download Details
+                const toggleSidebar = () => {
+                    sideNav.classList.toggle('active');
+                    sidebarOverlay.classList.toggle('active');
+                    document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : '';
+                };
+
+                sidebarToggle.addEventListener('click', toggleSidebar);
+                closeSideNav.addEventListener('click', toggleSidebar);
+                sidebarOverlay.addEventListener('click', toggleSidebar);
+
+                // Reveal Animation on Scroll
+                const revealElements = document.querySelectorAll('.reveal');
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                revealElements.forEach(el => revealObserver.observe(el));
+            });
+        </script>
+
+        <!-- Download Modal -->
+        <div class="modal-overlay" id="downloadModal">
+            <div class="modal-content">
+                <button class="close-modal" onclick="closeDownloadModal()">
+                    <i data-lucide="x"></i>
                 </button>
+                <div class="modal-title" id="modalTitle">File Download</div>
+                <p class="modal-desc" id="modalDesc">Click the button below to download the file.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-accent" id="downloadBtn" style="width: 100%; justify-content: center;">
+                        <i data-lucide="download" style="width: 18px; margin-right: 8px;"></i> Download Details
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        const DOWNLOAD_CONFIG = {
-            'brochure': {
-                title: 'Conference Brochure',
-                desc: 'Click the button below to download the conference details and brochure.',
-                path: 'pdf/conference_brochure.pdf',
-                name: 'IC-ADIB-26_Conference_Brochure.pdf'
-            },
-            'guidelines': {
-                title: 'Submission Guidelines',
-                desc: 'Click the button below to download the extended abstract submission guidelines.',
-                path: 'pdf/submission_guidelines.docx',
-                name: 'IC-ADIB-26_Submission_Guidelines.docx'
+        <script>
+            const DOWNLOAD_CONFIG = {
+                'brochure': {
+                    title: 'Conference Brochure',
+                    desc: 'Click the button below to download the conference details and brochure.',
+                    path: 'pdf/conference_brochure.pdf',
+                    name: 'IC-ADIB-26_Conference_Brochure.pdf'
+                },
+                'guidelines': {
+                    title: 'Submission Guidelines',
+                    desc: 'Click the button below to download the extended abstract submission guidelines.',
+                    path: 'pdf/submission_guidelines.docx',
+                    name: 'IC-ADIB-26_Submission_Guidelines.docx'
+                }
+            };
+
+            function openDownloadModal(type, e) {
+                if (e) e.preventDefault();
+                const config = DOWNLOAD_CONFIG[type];
+                if (!config) return;
+
+                document.getElementById('modalTitle').innerText = config.title;
+                document.getElementById('modalDesc').innerText = config.desc;
+
+                const btn = document.getElementById('downloadBtn');
+                btn.onclick = () => handleDownload(config.path, config.name);
+
+                document.getElementById('downloadModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
-        };
 
-        function openDownloadModal(type, e) {
-            if (e) e.preventDefault();
-            const config = DOWNLOAD_CONFIG[type];
-            if (!config) return;
+            function closeDownloadModal() {
+                document.getElementById('downloadModal').classList.remove('active');
+                document.body.style.overflow = '';
+            }
 
-            document.getElementById('modalTitle').innerText = config.title;
-            document.getElementById('modalDesc').innerText = config.desc;
-            
-            const btn = document.getElementById('downloadBtn');
-            btn.onclick = () => handleDownload(config.path, config.name);
+            function handleDownload(path, name) {
+                const link = document.createElement('a');
+                link.href = path;
+                link.download = name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                closeDownloadModal();
+            }
 
-            document.getElementById('downloadModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+            // Close modal on click outside
+            document.getElementById('downloadModal').addEventListener('click', (e) => {
+                if (e.target.id === 'downloadModal') closeDownloadModal();
+            });
+        </script>
 
-        function closeDownloadModal() {
-            document.getElementById('downloadModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function handleDownload(path, name) {
-            const link = document.createElement('a');
-            link.href = path;
-            link.download = name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            closeDownloadModal();
-        }
-
-        // Close modal on click outside
-        document.getElementById('downloadModal').addEventListener('click', (e) => {
-            if (e.target.id === 'downloadModal') closeDownloadModal();
-        });
-    </script>
-
-    <!-- Chatbot -->
-    <link rel="stylesheet" href="chatbot.css">
-    <div id="chatbot-container"></div>
-    <script src="chatbot.js"></script>
+        <!-- Chatbot -->
+        <link rel="stylesheet" href="chatbot.css">
+        <div id="chatbot-container"></div>
+        <script src="chatbot.js"></script>
 </body>
 
 </html>

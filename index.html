@@ -507,7 +507,7 @@
             position: relative;
             min-height: 100vh;
             background-color: var(--bg-dark);
-            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/imag_1.jpg');
+            background-image: linear-gradient(rgba(7, 11, 20, 0.75), rgba(7, 11, 20, 0.6)), url('images/Home_Img.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -628,7 +628,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             background: var(--white);
             border-radius: 16px;
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.1);
@@ -796,76 +796,190 @@
             color: var(--accent);
         }
 
-        /* Tracks (Bento Grid) */
+        /* Tracks (Premium Light Glassmorphic List) */
         .tracks-section {
-            background-color: var(--light-bg);
+            background-color: #F8FAFC;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tracks-section::before {
+            content: '';
+            position: absolute;
+            top: 0%; left: -10%;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(255, 90, 31, 0.4) 0%, rgba(255, 90, 31, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(80px);
+        }
+
+        .tracks-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0%; right: -10%;
+            width: 900px; height: 900px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 70%);
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(100px);
+        }
+
+        .tracks-section .section-label {
+            color: var(--accent);
+            text-align: left;
+            margin-left: 0;
+            display: inline-block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tracks-section .section-title {
+            color: #0F172A;
+            text-align: left;
+            margin-left: 0;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 2;
         }
 
         .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 2;
         }
 
         .track-cell {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 3rem;
-            border: 1px solid var(--border-dark);
-            transition: var(--transition-fast);
             display: flex;
-            flex-direction: column;
-            grid-column: span 4;
-        }
-
-        .track-cell:nth-child(1),
-        .track-cell:nth-child(2) {
-            grid-column: span 6;
-        }
-
-        .track-cell:nth-child(6),
-        .track-cell:nth-child(7) {
-            grid-column: span 6;
+            flex-direction: row;
+            align-items: center;
+            padding: 2.5rem 3rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.04),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.2);
         }
 
         .track-cell:hover {
-            border-color: var(--accent);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.06);
-            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.08),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        .track-cell::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: skewX(-20deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .track-cell:hover::after {
+            left: 120%;
         }
 
         .track-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 3rem;
+            align-items: center;
+            min-width: 60px;
+            margin-bottom: 0;
+            z-index: 1;
         }
 
         .track-num {
             font-family: var(--font-mono);
-            font-size: 1rem;
-            color: var(--text-muted);
+            font-size: 1.8rem;
+            color: rgba(15, 23, 42, 0.25);
+            font-weight: 300;
+            transition: all 0.4s;
+            background: none;
+            padding: 0;
+            box-shadow: none;
+            backdrop-filter: none;
         }
 
-        .track-icon {
+        .track-cell:hover .track-num {
             color: var(--accent);
-            opacity: 0.7;
-            transition: var(--transition-fast);
-            width: 32px;
-            height: 32px;
-        }
-
-        .track-cell:hover .track-icon {
-            opacity: 1;
-            transform: scale(1.15);
+            transform: translateX(5px);
         }
 
         .track-cell h3 {
-            font-family: var(--font-body);
-            font-size: 1.4rem;
-            font-weight: 600;
-            line-height: 1.4;
-            margin-top: auto;
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #1E293B;
+            margin-top: 0;
+            margin-left: 2rem;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            flex: 1;
+        }
+
+        .track-cell:hover h3 {
+            color: #0F172A;
+            transform: translateX(10px);
+        }
+
+        .track-icon {
+            color: #94A3B8;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px; /* Elegant Squircle */
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.4) 100%);
+            border: 1px solid rgba(255, 255, 255, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.05),
+                inset 0 2px 4px rgba(255, 255, 255, 1); /* Inner rim lighting */
+            opacity: 1;
+            padding: 0;
+        }
+
+        .track-icon svg {
+            width: 20px;
+            height: 20px;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .track-cell:hover .track-icon {
+            color: var(--accent); /* Only the icon itself glows orange */
+            background: #FFFFFF; /* Base stays clean white */
+            border-color: rgba(255, 90, 31, 0.2);
+            transform: translateY(-50%) scale(1.08); /* Sophisticated lift without rotation */
+            box-shadow: 
+                0 15px 30px rgba(255, 90, 31, 0.15),
+                inset 0 2px 5px rgba(255, 255, 255, 1);
+        }
+
+        .track-cell:hover .track-icon svg {
+            transform: scale(1.1); /* Subtle inner element scaling */
         }
 
         /* Timeline Editorial */
@@ -1532,6 +1646,55 @@
         }
 
         @media (max-width: 768px) {
+            .track-cell {
+                flex-direction: row !important;
+                align-items: center !important;
+                text-align: left !important;
+                padding: 1.25rem 1rem !important;
+                gap: 0.75rem !important;
+                position: relative !important;
+                justify-content: flex-start !important;
+            }
+
+            .track-header {
+                display: contents !important;
+            }
+
+            .track-num {
+                order: 1 !important;
+                opacity: 0.4 !important;
+                font-size: 1rem !important;
+                font-weight: 700 !important;
+                min-width: 24px !important;
+            }
+
+            .track-cell h3 {
+                order: 2 !important;
+                margin: 0 0.5rem !important;
+                font-size: 1rem !important;
+                line-height: 1.4 !important;
+                flex: 1 !important;
+                text-align: left !important;
+            }
+
+            .track-icon {
+                order: 3 !important;
+                position: relative !important;
+                right: auto !important;
+                top: auto !important;
+                transform: none !important;
+                margin: 0 !important;
+                width: 32px !important;
+                height: 32px !important;
+                border-radius: 8px !important;
+                flex-shrink: 0 !important;
+            }
+
+            .track-icon svg {
+                width: 16px !important;
+                height: 16px !important;
+            }
+
             .hero {
                 text-align: center;
                 background-attachment: scroll;
@@ -1754,48 +1917,61 @@
         /* Master Mobile Header Fix - Placed at the end for absolute priority */
         @media (max-width: 768px) {
             header {
-                top: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                transform: none !important;
-                left: 0 !important;
+                top: 1rem !important;
+                width: 95% !important;
+                max-width: 95% !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
 
             .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-                border-left: none !important;
-                border-right: none !important;
-                border-top: none !important;
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 background: rgba(7, 11, 20, 0.95) !important;
                 width: 100% !important;
                 display: flex !important;
                 align-items: center !important;
+                justify-content: space-between !important;
             }
 
-            header.scrolled .navbar {
-                border-radius: 0 !important;
-                padding: 0.8rem 1.5rem !important;
-            }
-
-            .logo {
-                gap: 0.75rem !important;
+            .nav-logos {
+                gap: 0.3rem !important;
+                flex: 1;
                 display: flex !important;
                 align-items: center !important;
             }
 
+            .nav-logos img {
+                height: 20px !important;
+                width: auto !important;
+            }
+
+            header.scrolled .navbar {
+                border-radius: 100px !important;
+                padding: 0.6rem 0.8rem !important;
+            }
+
+            .logo {
+                gap: 0.2rem !important;
+                display: flex !important;
+                align-items: center !important;
+                color: #ffffff !important;
+            }
+
             .logo img {
-                height: 32px !important;
+                height: 24px !important;
                 width: auto !important;
             }
 
             .logo h1,
-            .logo span {
-                font-size: 1.1rem !important;
+            .logo span,
+            .logo div {
+                font-size: 0.85rem !important;
                 margin: 0 !important;
                 line-height: 1 !important;
-                display: flex !important;
-                align-items: center !important;
+                display: inline-block !important;
+                color: #ffffff !important;
             }
 
             .logo-institute,
@@ -1804,7 +1980,7 @@
             }
 
             .grid-menu-btn {
-                padding: 8px !important;
+                padding: 6px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -1817,10 +1993,10 @@
 
     <header id="header">
         <nav class="navbar">
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div class="nav-logos" style="display: flex; align-items: center; gap: 1.5rem;">
                 <a href="#home" class="logo">
                     <img src="images/iitism-logo.png" alt="IIT (ISM) Dhanbad Logo" style="height: 40px; width: auto;">
-                    <div>IC ADIB<span class="accent">-26</span></div>
+                    <div style="white-space: nowrap;">IC ADIB<span class="accent">-26</span></div>
                 </a>
                 <div class="logo-divider"></div>
                 <img src="images/centery_logo.png" alt="IIT (ISM) Centenary Logo"
@@ -1948,10 +2124,10 @@
                     <div class="stat-val count" data-val="3">0</div>
                     <div class="stat-label">Days</div>
                 </div>
-                <div class="stat-card">
+                <!-- <div class="stat-card">
                     <div class="stat-val">Hybrid</div>
                     <div class="stat-label">Mode</div>
-                </div>
+                </div> -->
                 <div class="stat-card">
                     <div class="stat-val count" data-val="100">0<span>+</span></div>
                     <div class="stat-label">Years Legacy</div>
@@ -2027,7 +2203,7 @@
                         <div class="inst-footer-tag">Centenary Year 2026</div>
                     </div>
                     <div class="inst-block reveal" style="transition-delay: 150ms;">
-                        <h3>Management Studies & IE</h3>
+                        <h3>Management Studies & Industrial Engineering</h3>
                         <p>The Department of Management Studies & Industrial Engineering at IIT (ISM) Dhanbad is a
                             multidisciplinary department dedicated to developing future-ready management professionals
                             and researchers. The department integrates management science, industrial engineering,
@@ -2263,8 +2439,7 @@
                 <h2 class="section-title">Organizing Committee</h2>
 
                 <div class="committee-tabs reveal">
-                    <button class="tab-btn active" data-tier="patrons">Patrons</button>
-                    <button class="tab-btn" data-tier="core">Core Committee</button>
+                    <button class="tab-btn active" data-tier="patrons">Patrons & Core Committee</button>
                     <button class="tab-btn" data-tier="internal">Internal Advisory Committee</button>
                 </div>
 
@@ -2272,7 +2447,7 @@
                     <div class="tier-header">
                         <div class="tier-title">Conference Patrons</div>
                     </div>
-                    <div class="profiles-grid">
+                    <div class="profiles-grid" style="margin-bottom: 3rem;">
                         <div class="committee-card">
                             <div>
                                 <h4>Prof. Prem Vrat</h4>
@@ -2302,9 +2477,7 @@
                             <span class="tag">Co-Patron</span>
                         </div>
                     </div>
-                </div>
 
-                <div id="core" class="committee-tier">
                     <div class="tier-header">
                         <div class="tier-title">Core Organizing Committee</div>
                     </div>
@@ -2418,6 +2591,48 @@
                         </div>
                         <div class="adv-item">
                             <h4>Prof. Bibhas Chandra</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coordinating Team -->
+        <section id="coordinating-team" class="section"
+            style="background-color: var(--light-bg); border-top: 1px solid rgba(0,0,0,0.05);">
+            <div class="container reveal">
+                <span class="section-label">Doctoral Scholars</span>
+                <h2 class="section-title">Coordinating Team</h2>
+
+                <div class="profiles-grid" style="margin-top: 3rem;">
+                    <div class="committee-card">
+                        <div>
+                            <h4>Amresh Saurav</h4>
+                            <p class="role-desc">Operations</p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                            <a href="mailto:22dr0045@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                22dr0045@iitism.ac.in</a>
+                        </div>
+                    </div>
+                    <div class="committee-card">
+                        <div>
+                            <h4>Ashutosh Ranjan</h4>
+                            <p class="role-desc">Operations</p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                            <a href="mailto:22dr0063@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                22dr0063@iitism.ac.in</a>
+                        </div>
+                    </div>
+                    <div class="committee-card">
+                        <div>
+                            <h4>Vineet Singh</h4>
+                            <p class="role-desc">Website handling</p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+                            <a href="mailto:24dr0219@iitism.ac.in" class="email-link"><i data-lucide="mail"></i>
+                                24dr0219@iitism.ac.in</a>
                         </div>
                     </div>
                 </div>
