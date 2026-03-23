@@ -1821,6 +1821,7 @@
                                 style="color: var(--accent);">Submit Abstract</a></li>
                         <li><a href="register.html">Register Now</a></li>
                         <li><a href="#" onclick="openDownloadModal('brochure', event)">Conference Brochure</a></li>
+                        <li><a href="#" onclick="openDownloadModal('flyer', event)">Conference Flyer</a></li>
                     </ul>
                 </div>
             </div>
@@ -1845,6 +1846,7 @@
                 </div>
             </div>
         </div>
+    </footer>
         <script>
             lucide.createIcons();
 
@@ -1891,72 +1893,78 @@
         </script>
 
         <!-- Download Modal -->
-        <div class="modal-overlay" id="downloadModal">
-            <div class="modal-content">
-                <button class="close-modal" onclick="closeDownloadModal()">
-                    <i data-lucide="x"></i>
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeDownloadModal()">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-title" id="modalTitle">File Download</div>
+            <p class="modal-desc" id="modalDesc">Click the button below to download the file.</p>
+            <div class="modal-actions">
+                <button class="btn btn-accent" id="downloadBtn" style="width: 100%; justify-content: center;">
+                    <i data-lucide="download" style="width: 18px; margin-right: 8px;"></i> Download Details
                 </button>
-                <div class="modal-title" id="modalTitle">File Download</div>
-                <p class="modal-desc" id="modalDesc">Click the button below to download the file.</p>
-                <div class="modal-actions">
-                    <button class="btn btn-accent" id="downloadBtn" style="width: 100%; justify-content: center;">
-                        <i data-lucide="download" style="width: 18px; margin-right: 8px;"></i> Download Details
-                    </button>
-                </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            const DOWNLOAD_CONFIG = {
-                'brochure': {
-                    title: 'Conference Brochure',
-                    desc: 'Click the button below to download the conference details and brochure.',
-                    path: 'pdf/conference_brochure.pdf',
-                    name: 'IC-ADIB-26_Conference_Brochure.pdf'
-                },
-                'guidelines': {
-                    title: 'Submission Guidelines',
-                    desc: 'Click the button below to download the extended abstract submission guidelines.',
-                    path: 'pdf/submission_guidelines.docx',
-                    name: 'IC-ADIB-26_Submission_Guidelines.docx'
-                }
-            };
-
-            function openDownloadModal(type, e) {
-                if (e) e.preventDefault();
-                const config = DOWNLOAD_CONFIG[type];
-                if (!config) return;
-
-                document.getElementById('modalTitle').innerText = config.title;
-                document.getElementById('modalDesc').innerText = config.desc;
-
-                const btn = document.getElementById('downloadBtn');
-                btn.onclick = () => handleDownload(config.path, config.name);
-
-                document.getElementById('downloadModal').classList.add('active');
-                document.body.style.overflow = 'hidden';
+    <script>
+        const DOWNLOAD_CONFIG = {
+            'brochure': {
+                title: 'Conference Brochure',
+                desc: 'Click the button below to download the conference details and brochure.',
+                path: 'Pdf/conference_brochure.pdf',
+                name: 'conference_brochure.pdf'
+            },
+            'guidelines': {
+                title: 'Submission Guidelines',
+                desc: 'Click the button below to download the extended abstract submission guidelines.',
+                path: 'Pdf/submission_guidelines.docx',
+                name: 'submission_guidelines.docx'
+            },
+            'flyer': {
+                title: 'Conference Flyer',
+                desc: 'Click the button below to download the conference flyer.',
+                path: 'Pdf/flyer.pdf',
+                name: 'flyer.pdf'
             }
+        };
 
-            function closeDownloadModal() {
-                document.getElementById('downloadModal').classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        function openDownloadModal(type, e) {
+            if (e) e.preventDefault();
+            const config = DOWNLOAD_CONFIG[type];
+            if (!config) return;
 
-            function handleDownload(path, name) {
-                const link = document.createElement('a');
-                link.href = path;
-                link.download = name;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                closeDownloadModal();
-            }
+            document.getElementById('modalTitle').innerText = config.title;
+            document.getElementById('modalDesc').innerText = config.desc;
 
-            // Close modal on click outside
-            document.getElementById('downloadModal').addEventListener('click', (e) => {
-                if (e.target.id === 'downloadModal') closeDownloadModal();
-            });
-        </script>
+            const btn = document.getElementById('downloadBtn');
+            btn.onclick = () => handleDownload(config.path, config.name);
+
+            document.getElementById('downloadModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function handleDownload(path, name) {
+            const link = document.createElement('a');
+            link.href = path;
+            link.download = name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            closeDownloadModal();
+        }
+
+        // Close modal on click outside
+        document.getElementById('downloadModal').addEventListener('click', (e) => {
+            if (e.target.id === 'downloadModal') closeDownloadModal();
+        });
+    </script>
 
         <!-- Chatbot -->
         <link rel="stylesheet" href="chatbot.css">
